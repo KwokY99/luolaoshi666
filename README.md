@@ -1,10 +1,9 @@
-[API新BATE1.html](https://github.com/user-attachments/files/23003459/API.BATE1.html)
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>澳门六合彩开奖查询系统</title>
+    <title>罗老师666开奖查询系统</title>
     <style>
         * {
             margin: 0;
@@ -561,7 +560,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>澳门六合彩开奖查询系统</h1>
+            <h1>罗老师爱导管查询系统</h1>
             <p>实时获取最新开奖结果和历史数据</p>
         </div>
         
@@ -664,17 +663,17 @@
             </table>
         </div>
         
-        <div class="card">
+        <!--  <div class="card">
             <h2><i>ℹ️</i> 系统信息</h2>
             <p><strong>最新开奖API：</strong> https://macaumarksix.com/api/macaujc2.com</p>
             <p><strong>实时开奖API：</strong> https://macaumarksix.com/api/live2</p>
             <p><strong>历史开奖API：</strong> https://history.macaumarksix.com/history/macaujc2/y/{year}</p>
             <p><strong>数据来源：</strong> macaujc.com</p>
             <p><strong>技术支持：</strong> service@macaujc.com</p>
-        </div>
+        </div>-->
         
         <div class="footer">
-            <p>© 2025 澳门六合彩开奖查询系统 - 本系统仅用于数据展示</p>
+            <p>© 2025 罗老师爱导管查询系统 - 本系统仅用于精子库查询导管次数</p>
         </div>
     </div>
 
