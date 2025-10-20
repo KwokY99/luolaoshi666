@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>罗老师666开奖查询系统</title>
+    <title>罗老师爱导管查询系统</title>
     <style>
         * {
             margin: 0;
@@ -662,7 +662,7 @@
             </table>
         </div>
         
-        <!--  <div class="card">
+        <!--<div class="card">
             <h2><i>ℹ️</i> 系统信息</h2>
             <p><strong>最新开奖API：</strong> https://macaumarksix.com/api/macaujc2.com</p>
             <p><strong>实时开奖API：</strong> https://macaumarksix.com/api/live2</p>
