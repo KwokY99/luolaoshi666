@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>罗老师爱导管查询系统</title>
+    <title>罗老师开奖查询系统 - AI增强版</title>
     <style>
         * {
             margin: 0;
@@ -179,7 +180,7 @@
             box-shadow: none;
         }
         
-        .year-input, .count-input, .periods-input {
+        .year-input, .count-input, .periods-input, .ai-periods-input {
             padding: 12px 15px;
             border: 2px solid #ddd;
             border-radius: 50px;
@@ -188,7 +189,7 @@
             transition: border-color 0.3s;
         }
         
-        .year-input:focus, .count-input:focus, .periods-input:focus {
+        .year-input:focus, .count-input:focus, .periods-input:focus, .ai-periods-input:focus {
             border-color: #1a2a6c;
             outline: none;
         }
@@ -343,14 +344,14 @@
         }
         
         /* 新版生肖对照表样式 */
-        .zodiac-grid {
+        .zodiac-grid, .element-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 15px;
             margin-top: 15px;
         }
         
-        .zodiac-column {
+        .zodiac-column, .element-column {
             background: white;
             border-radius: 10px;
             padding: 15px;
@@ -358,7 +359,7 @@
             text-align: center;
         }
         
-        .zodiac-header {
+        .zodiac-header, .element-header {
             background: linear-gradient(135deg, #1a2a6c, #b21f1f);
             color: white;
             padding: 10px;
@@ -368,7 +369,7 @@
             font-size: 1.1rem;
         }
         
-        .zodiac-number {
+        .zodiac-number, .element-number {
             padding: 5px;
             margin: 3px 0;
             background: #f8f9fa;
@@ -378,39 +379,8 @@
             border: 1px solid #e9ecef;
         }
         
-        .element-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        
-        .element-table th, .element-table td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-        
-        .element-table th {
-            background-color: #1a2a6c;
-            color: white;
-        }
-        
-        .element-table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        .element-table tr:hover {
-            background-color: #f1f1f1;
-        }
-        
-        .element-color-gold { color: #ffd700; font-weight: bold; }
-        .element-color-wood { color: #228B22; font-weight: bold; }
-        .element-color-water { color: #1E90FF; font-weight: bold; }
-        .element-color-fire { color: #FF4500; font-weight: bold; }
-        .element-color-earth { color: #8B4513; font-weight: bold; }
-        
         /* 走势图样式 */
-        .trend-controls {
+        .trend-controls, .ai-controls {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
@@ -478,6 +448,273 @@
             transition: width 0.5s ease;
         }
         
+        /* AI分析样式 */
+        .analysis-report {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        
+        .report-header {
+            border-bottom: 2px solid #fdbb2d;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .report-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .analysis-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #1a2a6c;
+        }
+        
+        .analysis-card h4 {
+            color: #1a2a6c;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .analysis-card h4 i {
+            margin-right: 8px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1a2a6c;
+        }
+        
+        .pattern-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .pattern-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .pattern-value {
+            font-weight: bold;
+            color: #1a2a6c;
+        }
+        
+        .prediction-card {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            color: white;
+        }
+        
+        .prediction-card h4 {
+            color: white;
+        }
+        
+        .prediction-numbers {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            justify-content: center;
+        }
+        
+        .prediction-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .prediction-info {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .hot-numbers {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        
+        .hot-number {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        
+        .hot-number .number {
+            font-weight: bold;
+            color: #1a2a6c;
+        }
+        
+        .hot-number .count {
+            color: #666;
+            font-size: 0.7rem;
+        }
+        
+        .warning-card {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        
+        .warning-card h4 {
+            color: #856404;
+        }
+        
+        .warnings {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .warning-item {
+            padding: 8px 12px;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #856404;
+            border-left: 3px solid #ffc107;
+        }
+        
+        /* 数据库管理样式 */
+        .db-info-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .db-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .db-stat {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .db-stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1a2a6c;
+            margin: 5px 0;
+        }
+        
+        .db-stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .db-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        /* AI预测历史记录样式 */
+        .prediction-history {
+            margin-top: 20px;
+        }
+        
+        .history-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #1a2a6c;
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .history-predictions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .history-prediction {
+            padding: 5px 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .history-result {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .correct {
+            color: #2a6c2a;
+            font-weight: bold;
+        }
+        
+        .incorrect {
+            color: #b21f1f;
+            font-weight: bold;
+        }
+        
         .footer {
             text-align: center;
             margin-top: 30px;
@@ -487,7 +724,7 @@
         }
         
         @media (max-width: 768px) {
-            .controls, .trend-controls {
+            .controls, .trend-controls, .ai-controls {
                 flex-direction: column;
             }
             
@@ -495,7 +732,7 @@
                 width: 100%;
             }
             
-            .year-input, .count-input, .periods-input {
+            .year-input, .count-input, .periods-input, .ai-periods-input {
                 width: 100%;
             }
             
@@ -534,24 +771,48 @@
                 grid-template-columns: 1fr;
             }
             
-            .zodiac-grid {
+            .zodiac-grid, .element-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 10px;
             }
             
-            .zodiac-column {
+            .zodiac-column, .element-column {
                 padding: 10px;
             }
             
-            .zodiac-header {
+            .zodiac-header, .element-header {
                 font-size: 1rem;
                 padding: 8px;
+            }
+            
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hot-numbers {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .prediction-numbers {
+                flex-wrap: wrap;
+            }
+            
+            .db-stats {
+                grid-template-columns: 1fr 1fr;
             }
         }
         
         @media (max-width: 480px) {
-            .zodiac-grid {
+            .zodiac-grid, .element-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .db-stats {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -559,8 +820,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>罗老师爱导管查询系统</h1>
-            <p>实时获取最新开奖结果和历史数据</p>
+            <h1>罗傲开奖查询系统 - AI增强版</h1>
+            <p>实时获取最新开奖结果和历史数据 | 内置智能AI分析和深度学习预测</p>
         </div>
         
         <!-- 倒计时区域 -->
@@ -599,6 +860,9 @@
                     <button id="historyBtn"><i>📚</i> 查询历史数据</button>
                 </div>
                 <button id="trendBtn"><i>📊</i> 走势图分析</button>
+                <button id="saveToDbBtn"><i>💾</i> 保存到数据库</button>
+                <button id="analyzeWithAIBtn"><i>🤖</i> AI智能分析</button>
+                <button id="dbManageBtn"><i>🗃️</i> 数据库管理</button>
                 <button id="debugBtn"><i>🐛</i> 调试模式</button>
             </div>
             
@@ -621,6 +885,38 @@
             
             <div id="resultContainer" class="result-container">
                 <!-- 结果将在这里显示 -->
+            </div>
+        </div>
+        
+        <!-- AI分析结果区域 -->
+        <div class="card" id="aiAnalysisSection" style="display: none;">
+            <h2><i>🤖</i> DeepSeek AI 智能分析报告</h2>
+            <div class="ai-controls">
+                <input type="number" id="aiPeriodsInput" class="ai-periods-input" placeholder="分析期数" min="1" max="500" value="10">
+                <button id="analyzeWithAIBtn2"><i>🤖</i> 执行AI分析</button>
+                <button id="closeAIBtn"><i>❌</i> 关闭分析</button>
+            </div>
+            <div id="aiAnalysisResults">
+                <!-- AI分析结果将在这里显示 -->
+            </div>
+        </div>
+        
+        <!-- AI预测历史记录区域 -->
+        <div class="card" id="aiHistorySection" style="display: none;">
+            <h2><i>📝</i> AI预测历史记录</h2>
+            <div class="db-actions">
+                <button onclick="clearPredictionHistory()" style="background: linear-gradient(to right, #b21f1f, #ff6b6b);"><i>🗑️</i> 清空历史记录</button>
+            </div>
+            <div id="aiHistoryResults" class="prediction-history">
+                <!-- AI预测历史记录将在这里显示 -->
+            </div>
+        </div>
+        
+        <!-- 数据库管理区域 -->
+        <div class="card" id="dbManageSection" style="display: none;">
+            <h2><i>🗃️</i> 数据库管理</h2>
+            <div id="dbManageResults">
+                <!-- 数据库管理界面将在这里显示 -->
             </div>
         </div>
         
@@ -647,47 +943,35 @@
         
         <div class="card">
             <h2><i>🌿</i> 五行号码对照表</h2>
-            <table class="element-table" id="elementTable">
-                <thead>
-                    <tr>
-                        <th>五行</th>
-                        <th>号码</th>
-                        <th>五行</th>
-                        <th>号码</th>
-                    </tr>
-                </thead>
-                <tbody id="elementTableBody">
-                    <!-- 五行数据将通过JavaScript填充 -->
-                </tbody>
-            </table>
+            <div class="element-grid" id="elementGrid">
+                <!-- 五行数据将通过JavaScript填充 -->
+            </div>
         </div>
         
-        <!--<div class="card">
-            <h2><i>ℹ️</i> 系统信息</h2>
-            <p><strong>最新开奖API：</strong> https://macaumarksix.com/api/macaujc2.com</p>
-            <p><strong>实时开奖API：</strong> https://macaumarksix.com/api/live2</p>
-            <p><strong>历史开奖API：</strong> https://history.macaumarksix.com/history/macaujc2/y/{year}</p>
-            <p><strong>数据来源：</strong> macaujc.com</p>
-            <p><strong>技术支持：</strong> service@macaujc.com</p>
-        </div>-->
-        
         <div class="footer">
-            <p>© 2025 罗老师爱导管查询系统 - 本系统仅用于精子库查询导管次数</p>
+            <p>© 2025 罗老师系统 - 本系统仅用于导管使用</p>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // 获取DOM元素
             const latestBtn = document.getElementById('latestBtn');
             const liveBtn = document.getElementById('liveBtn');
             const historyBtn = document.getElementById('historyBtn');
             const trendBtn = document.getElementById('trendBtn');
+            const saveToDbBtn = document.getElementById('saveToDbBtn');
+            const analyzeWithAIBtn = document.getElementById('analyzeWithAIBtn');
+            const analyzeWithAIBtn2 = document.getElementById('analyzeWithAIBtn2');
+            const dbManageBtn = document.getElementById('dbManageBtn');
             const debugBtn = document.getElementById('debugBtn');
             const analyzeTrendBtn = document.getElementById('analyzeTrendBtn');
             const closeTrendBtn = document.getElementById('closeTrendBtn');
+            const closeAIBtn = document.getElementById('closeAIBtn');
             const yearInput = document.getElementById('yearInput');
             const countInput = document.getElementById('countInput');
             const periodsInput = document.getElementById('periodsInput');
+            const aiPeriodsInput = document.getElementById('aiPeriodsInput');
             const loading = document.getElementById('loading');
             const error = document.getElementById('error');
             const success = document.getElementById('success');
@@ -696,10 +980,16 @@
             const trendAnalysis = document.getElementById('trendAnalysis');
             const trendResults = document.getElementById('trendResults');
             const zodiacGrid = document.getElementById('zodiacGrid');
+            const elementGrid = document.getElementById('elementGrid');
             const errorMsg = document.getElementById('errorMsg');
             const successMsg = document.getElementById('successMsg');
             const debugMsg = document.getElementById('debugMsg');
-            const elementTableBody = document.getElementById('elementTableBody');
+            const aiAnalysisSection = document.getElementById('aiAnalysisSection');
+            const aiAnalysisResults = document.getElementById('aiAnalysisResults');
+            const aiHistorySection = document.getElementById('aiHistorySection');
+            const aiHistoryResults = document.getElementById('aiHistoryResults');
+            const dbManageSection = document.getElementById('dbManageSection');
+            const dbManageResults = document.getElementById('dbManageResults');
             
             // 倒计时元素
             const currentPeriod = document.getElementById('currentPeriod');
@@ -708,8 +998,18 @@
             const countdownMinutes = document.getElementById('countdownMinutes');
             const countdownSeconds = document.getElementById('countdownSeconds');
             
+            // 系统变量
             let debugMode = false;
             let historyData = []; // 存储历史数据
+            
+            // 本地数据库
+            let localDatabase = {
+                history: [],
+                analysis: {},
+                predictions: [],
+                version: '2.0',
+                lastUpdate: ''
+            };
             
             // 生肖号码对照数据
             const zodiacNumbers = {
@@ -736,25 +1036,55 @@
                 "土": [5, 6, 19, 20, 27, 28, 35, 36, 49]
             };
             
-            // 初始化对照表
-            initZodiacGrid();
-            initElementTable();
+            // 初始化系统
+            initSystem();
             
-            // 初始化倒计时
-            initCountdown();
+            function initSystem() {
+                loadLocalDatabase();
+                initZodiacGrid();
+                initElementGrid();
+                initCountdown();
+                bindEventListeners();
+                showSuccess('系统初始化完成！本地数据库记录: ' + localDatabase.history.length + ' 条');
+            }
             
-            // 最新开奖按钮点击事件
-            latestBtn.addEventListener('click', function() {
-                fetchLatestResults();
-            });
+            function loadLocalDatabase() {
+                try {
+                    const savedDb = localStorage.getItem('lotteryDatabase');
+                    if (savedDb) {
+                        localDatabase = JSON.parse(savedDb);
+                        if (!localDatabase.predictions) {
+                            localDatabase.predictions = [];
+                        }
+                    }
+                } catch (e) {
+                    console.log('初始化新数据库');
+                    localDatabase = {
+                        history: [],
+                        analysis: {},
+                        predictions: [],
+                        version: '2.0',
+                        lastUpdate: ''
+                    };
+                }
+            }
             
-            // 实时开奖按钮点击事件
-            liveBtn.addEventListener('click', function() {
-                fetchLiveResults();
-            });
+            function bindEventListeners() {
+                latestBtn.addEventListener('click', fetchLatestResults);
+                liveBtn.addEventListener('click', fetchLiveResults);
+                historyBtn.addEventListener('click', handleHistoryQuery);
+                trendBtn.addEventListener('click', showTrendAnalysis);
+                analyzeTrendBtn.addEventListener('click', handleTrendAnalysis);
+                closeTrendBtn.addEventListener('click', hideTrendAnalysis);
+                debugBtn.addEventListener('click', toggleDebugMode);
+                saveToDbBtn.addEventListener('click', saveToLocalDatabase);
+                analyzeWithAIBtn.addEventListener('click', showAIAnalysis);
+                analyzeWithAIBtn2.addEventListener('click', handleAIAnalysis);
+                closeAIBtn.addEventListener('click', hideAIAnalysis);
+                dbManageBtn.addEventListener('click', showDatabaseManager);
+            }
             
-            // 历史数据按钮点击事件
-            historyBtn.addEventListener('click', function() {
+            function handleHistoryQuery() {
                 const year = yearInput.value;
                 const count = countInput.value;
                 
@@ -769,40 +1099,206 @@
                 }
                 
                 fetchHistoryResults(year, count);
-            });
+            }
             
-            // 走势图按钮点击事件
-            trendBtn.addEventListener('click', function() {
-                showTrendAnalysis();
-            });
-            
-            // 分析走势按钮点击事件
-            analyzeTrendBtn.addEventListener('click', function() {
+            function handleTrendAnalysis() {
                 const periods = periodsInput.value;
                 if (!periods || periods < 10) {
                     showError('请输入至少10期的分析期数');
                     return;
                 }
                 analyzeTrend(parseInt(periods));
-            });
+            }
             
-            // 关闭走势分析按钮点击事件
-            closeTrendBtn.addEventListener('click', function() {
-                hideTrendAnalysis();
-            });
+            function handleAIAnalysis() {
+                const periods = aiPeriodsInput.value;
+                if (!periods || periods < 1) {
+                    showError('请输入分析期数');
+                    return;
+                }
+                performAIAnalysis(parseInt(periods));
+            }
             
-            // 调试按钮点击事件
-            debugBtn.addEventListener('click', function() {
-                debugMode = !debugMode;
-                debugBtn.style.background = debugMode ? 
-                    'linear-gradient(to right, #ff6b6b, #4ecdc4)' : 
-                    'linear-gradient(to right, #1a2a6c, #b21f1f)';
-                debugBtn.innerHTML = debugMode ? 
-                    '<i>🐛</i> 关闭调试' : 
-                    '<i>🐛</i> 调试模式';
-                showDebugInfo('调试模式 ' + (debugMode ? '已开启' : '已关闭'));
-            });
+            function showAIAnalysis() {
+                aiAnalysisSection.style.display = 'block';
+                aiHistorySection.style.display = 'block';
+                resultContainer.style.display = 'none';
+                trendAnalysis.style.display = 'none';
+                dbManageSection.style.display = 'none';
+                displayPredictionHistory();
+            }
             
+            function hideAIAnalysis() {
+                aiAnalysisSection.style.display = 'none';
+                aiHistorySection.style.display = 'none';
+            }
+            
+            function showTrendAnalysis() {
+                trendAnalysis.style.display = 'block';
+                resultContainer.style.display = 'none';
+                aiAnalysisSection.style.display = 'none';
+                aiHistorySection.style.display = 'none';
+                dbManageSection.style.display = 'none';
+            }
+            
+            function hideTrendAnalysis() {
+                trendAnalysis.style.display = 'none';
+            }
+            
+            function showDatabaseManager() {
+                dbManageSection.style.display = 'block';
+                resultContainer.style.display = 'none';
+                aiAnalysisSection.style.display = 'none';
+                aiHistorySection.style.display = 'none';
+                trendAnalysis.style.display = 'none';
+                displayDatabaseManager();
+            }
+            
+            // 显示数据库管理界面
+            function displayDatabaseManager() {
+                const dbInfo = getDatabaseInfo();
+                
+                dbManageResults.innerHTML = `
+                    <div class="db-info-card">
+                        <h3>数据库信息</h3>
+                        <div class="db-stats">
+                            <div class="db-stat">
+                                <div class="db-stat-label">总记录数</div>
+                                <div class="db-stat-value">${dbInfo.totalRecords}</div>
+                            </div>
+                            <div class="db-stat">
+                                <div class="db-stat-label">数据范围</div>
+                                <div class="db-stat-value">${dbInfo.dataRange.start} 至 ${dbInfo.dataRange.end}</div>
+                            </div>
+                            <div class="db-stat">
+                                <div class="db-stat-label">最后更新</div>
+                                <div class="db-stat-value">${dbInfo.lastUpdate}</div>
+                            </div>
+                            <div class="db-stat">
+                                <div class="db-stat-label">预测记录</div>
+                                <div class="db-stat-value">${dbInfo.predictionRecords}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="db-actions">
+                            <button onclick="exportDatabase()"><i>📤</i> 导出数据</button>
+                            <button onclick="clearDatabase()" style="background: linear-gradient(to right, #b21f1f, #ff6b6b);"><i>🗑️</i> 清空数据库</button>
+                            <button onclick="refreshDbInfo()"><i>🔄</i> 刷新信息</button>
+                        </div>
+                    </div>
+                    
+                    <div class="db-info-card">
+                        <h3>数据统计</h3>
+                        <div id="dbStatsDetails">
+                            <!-- 详细统计信息将在这里显示 -->
+                        </div>
+                    </div>
+                `;
+                
+                displayDatabaseStats();
+            }
+            
+            function getDatabaseInfo() {
+                return {
+                    totalRecords: localDatabase.history.length,
+                    dataRange: localDatabase.history.length > 0 ? {
+                        start: localDatabase.history[localDatabase.history.length - 1].openTime.split(' ')[0],
+                        end: localDatabase.history[0].openTime.split(' ')[0]
+                    } : { start: '无数据', end: '无数据' },
+                    lastUpdate: localDatabase.lastUpdate ? new Date(localDatabase.lastUpdate).toLocaleString() : '从未更新',
+                    predictionRecords: localDatabase.predictions.length
+                };
+            }
+            
+            function displayDatabaseStats() {
+                const statsDetails = document.getElementById('dbStatsDetails');
+                if (localDatabase.history.length === 0) {
+                    statsDetails.innerHTML = '<p>数据库中没有数据</p>';
+                    return;
+                }
+                
+                const years = {};
+                localDatabase.history.forEach(item => {
+                    const year = item.expect.substring(0, 4);
+                    years[year] = (years[year] || 0) + 1;
+                });
+                
+                let statsHTML = '<div class="pattern-list">';
+                Object.entries(years).forEach(([year, count]) => {
+                    statsHTML += `
+                        <div class="pattern-item">
+                            <span>${year}年</span>
+                            <span class="pattern-value">${count} 期</span>
+                        </div>
+                    `;
+                });
+                statsHTML += '</div>';
+                
+                statsDetails.innerHTML = statsHTML;
+            }
+            
+            // 导出数据库
+            function exportDatabase() {
+                if (localDatabase.history.length === 0) {
+                    showError('数据库中没有数据可导出');
+                    return;
+                }
+                
+                let exportContent = "期数\t开奖号码\t开奖时间\n";
+                exportContent += "================================\n";
+                
+                localDatabase.history.forEach(item => {
+                    exportContent += `${item.expect}\t${item.openCode}\t${item.openTime}\n`;
+                });
+                
+                const dataBlob = new Blob([exportContent], {type: 'text/plain;charset=utf-8'});
+                
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(dataBlob);
+                link.download = `lottery_data_${new Date().toISOString().split('T')[0]}.txt`;
+                link.click();
+                
+                showSuccess('数据导出成功！');
+            }
+            
+            // 清空数据库
+            function clearDatabase() {
+                if (confirm('确定要清空数据库吗？此操作不可恢复！')) {
+                    localDatabase = {
+                        history: [],
+                        analysis: {},
+                        predictions: [],
+                        version: '2.0',
+                        lastUpdate: new Date().toISOString()
+                    };
+                    localStorage.setItem('lotteryDatabase', JSON.stringify(localDatabase));
+                    showDatabaseManager();
+                    showSuccess('数据库已清空！');
+                }
+            }
+            
+            // 清空预测历史记录
+            function clearPredictionHistory() {
+                if (confirm('确定要清空AI预测历史记录吗？此操作不可恢复！')) {
+                    localDatabase.predictions = [];
+                    localStorage.setItem('lotteryDatabase', JSON.stringify(localDatabase));
+                    displayPredictionHistory();
+                    showSuccess('AI预测历史记录已清空！');
+                }
+            }
+            
+            // 刷新数据库信息
+            function refreshDbInfo() {
+                showDatabaseManager();
+                showSuccess('数据库信息已刷新！');
+            }
+            
+            // 将全局函数暴露给onclick事件
+            window.exportDatabase = exportDatabase;
+            window.clearDatabase = clearDatabase;
+            window.clearPredictionHistory = clearPredictionHistory;
+            window.refreshDbInfo = refreshDbInfo;
+
             // 初始化生肖网格布局
             function initZodiacGrid() {
                 const zodiacs = Object.keys(zodiacNumbers);
@@ -811,13 +1307,11 @@
                     const column = document.createElement('div');
                     column.className = 'zodiac-column';
                     
-                    // 生肖标题
                     const header = document.createElement('div');
                     header.className = 'zodiac-header';
                     header.textContent = `生肖${zodiac}`;
                     column.appendChild(header);
                     
-                    // 号码列表
                     zodiacNumbers[zodiac].forEach(number => {
                         const numberElement = document.createElement('div');
                         numberElement.className = 'zodiac-number';
@@ -829,48 +1323,567 @@
                 });
             }
             
-            // 显示走势分析
-            function showTrendAnalysis() {
-                trendAnalysis.style.display = 'block';
-                resultContainer.style.display = 'none';
-                // 如果没有历史数据，先获取一些数据
-                if (historyData.length === 0) {
-                    fetchHistoryDataForTrend();
+            // 初始化五行网格布局
+            function initElementGrid() {
+                const elements = Object.keys(elementNumbers);
+                
+                elements.forEach(element => {
+                    const column = document.createElement('div');
+                    column.className = 'element-column';
+                    
+                    const header = document.createElement('div');
+                    header.className = 'element-header';
+                    header.textContent = `五行${element}`;
+                    column.appendChild(header);
+                    
+                    elementNumbers[element].forEach(number => {
+                        const numberElement = document.createElement('div');
+                        numberElement.className = 'element-number';
+                        numberElement.textContent = number.toString().padStart(2, '0');
+                        column.appendChild(numberElement);
+                    });
+                    
+                    elementGrid.appendChild(column);
+                });
+            }
+            
+            // 根据号码获取生肖
+            function getZodiacByNumber(number) {
+                for (const [zodiac, numbers] of Object.entries(zodiacNumbers)) {
+                    if (numbers.includes(parseInt(number))) {
+                        return zodiac;
+                    }
                 }
+                return '未知';
             }
             
-            // 隐藏走势分析
-            function hideTrendAnalysis() {
-                trendAnalysis.style.display = 'none';
+            // 根据号码获取五行
+            function getElementByNumber(number) {
+                for (const [element, numbers] of Object.entries(elementNumbers)) {
+                    if (numbers.includes(parseInt(number))) {
+                        return element;
+                    }
+                }
+                return '未知';
             }
             
-            // 为走势分析获取历史数据
-            async function fetchHistoryDataForTrend() {
+            // 初始化倒计时
+            function initCountdown() {
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+            }
+            
+            // 更新倒计时
+            function updateCountdown() {
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                
+                const drawTime = new Date(today);
+                drawTime.setHours(21, 34, 0, 0);
+                
+                if (now > drawTime) {
+                    drawTime.setDate(drawTime.getDate() + 1);
+                }
+                
+                const diff = drawTime - now;
+                
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                countdownHours.textContent = hours.toString().padStart(2, '0');
+                countdownMinutes.textContent = minutes.toString().padStart(2, '0');
+                countdownSeconds.textContent = seconds.toString().padStart(2, '0');
+                
+                const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+                const weekday = weekdays[drawTime.getDay()];
+                nextDrawTime.textContent = `${drawTime.getFullYear()}-${(drawTime.getMonth()+1).toString().padStart(2, '0')}-${drawTime.getDate().toString().padStart(2, '0')} 21:34:00 ${weekday}`;
+                
+                const year = drawTime.getFullYear();
+                const startOfYear = new Date(year, 0, 1);
+                const dayOfYear = Math.floor((drawTime - startOfYear) / (1000 * 60 * 60 * 24)) + 1;
+                const period = `${year}${dayOfYear.toString().padStart(3, '0')}`;
+                currentPeriod.textContent = `第 ${period} 期`;
+            }
+            
+            // 保存数据到本地数据库
+            function saveToLocalDatabase() {
+                if (historyData.length === 0) {
+                    showError('没有可保存的数据，请先查询历史数据');
+                    return;
+                }
+                
                 showLoading();
+                
                 try {
-                    const currentYear = new Date().getFullYear();
-                    const apiUrl = `https://history.macaumarksix.com/history/macaujc2/y/${currentYear}`;
+                    const existingData = localDatabase.history;
+                    const newData = [...existingData];
+                    let addedCount = 0;
+                    let updatedCount = 0;
                     
-                    const response = await fetch(apiUrl);
+                    historyData.forEach(item => {
+                        const existingIndex = existingData.findIndex(existing => existing.expect === item.expect);
+                        if (existingIndex === -1) {
+                            newData.push(item);
+                            addedCount++;
+                        } else {
+                            newData[existingIndex] = item;
+                            updatedCount++;
+                        }
+                    });
                     
-                    if (!response.ok) {
-                        throw new Error(`HTTP错误! 状态: ${response.status}`);
-                    }
+                    newData.sort((a, b) => parseInt(b.expect) - parseInt(a.expect));
                     
-                    const data = await response.json();
+                    localDatabase.history = newData;
+                    localDatabase.lastUpdate = new Date().toISOString();
+                    localStorage.setItem('lotteryDatabase', JSON.stringify(localDatabase));
                     
-                    if (data && data.result && Array.isArray(data.data)) {
-                        historyData = data.data;
-                        showSuccess('历史数据加载完成，可以进行分析');
-                    } else {
-                        throw new Error('API返回的数据格式不正确');
-                    }
+                    let message = '数据库更新完成！';
+                    if (addedCount > 0) message += ` 新增 ${addedCount} 条记录`;
+                    if (updatedCount > 0) message += ` 更新 ${updatedCount} 条记录`;
+                    message += ` 总计 ${newData.length} 条记录`;
+                    
+                    showSuccess(message);
+                    showDebugInfo(`数据库统计: 总计 ${newData.length} 条记录`);
+                    
                 } catch (err) {
-                    console.error('获取历史数据失败:', err);
-                    showError('获取历史数据失败: ' + err.message);
+                    console.error('保存到数据库失败:', err);
+                    showError('保存到数据库失败: ' + err.message);
                 } finally {
                     hideLoading();
                 }
+            }
+            
+            // 显示预测历史记录
+            function displayPredictionHistory() {
+                if (!localDatabase.predictions || localDatabase.predictions.length === 0) {
+                    aiHistoryResults.innerHTML = '<p>暂无预测历史记录</p>';
+                    return;
+                }
+                
+                let historyHTML = '';
+                
+                localDatabase.predictions.forEach(prediction => {
+                    const numbersHTML = prediction.predictedNumbers.map(num => 
+                        `<div class="history-prediction">${num}</div>`
+                    ).join('');
+                    
+                    const zodiacsHTML = prediction.predictedZodiacs.map(zodiac => 
+                        `<div class="history-prediction">${zodiac}</div>`
+                    ).join('');
+                    
+                    let resultHTML = '';
+                    if (prediction.actualResult) {
+                        const isCorrect = prediction.isCorrect ? 
+                            `<span class="correct">✓ 预测正确</span>` : 
+                            `<span class="incorrect">✗ 预测错误</span>`;
+                        
+                        resultHTML = `
+                            <div class="history-result">
+                                <span>实际开奖: ${prediction.actualResult}</span>
+                                ${isCorrect}
+                            </div>
+                        `;
+                    } else {
+                        resultHTML = `
+                            <div class="history-result">
+                                <span>等待开奖结果...</span>
+                            </div>
+                        `;
+                    }
+                    
+                    historyHTML += `
+                        <div class="history-item">
+                            <div class="history-header">
+                                <span>预测时间: ${prediction.timestamp}</span>
+                                <span>分析期数: ${prediction.period}期</span>
+                            </div>
+                            <div>
+                                <strong>预测号码:</strong>
+                                <div class="history-predictions">
+                                    ${numbersHTML}
+                                </div>
+                            </div>
+                            <div>
+                                <strong>预测生肖:</strong>
+                                <div class="history-predictions">
+                                    ${zodiacsHTML}
+                                </div>
+                            </div>
+                            ${resultHTML}
+                        </div>
+                    `;
+                });
+                
+                aiHistoryResults.innerHTML = historyHTML;
+            }
+            
+            // AI智能分析功能
+            function performAIAnalysis(periods) {
+                if (localDatabase.history.length === 0) {
+                    showError('本地数据库中没有数据，请先查询并保存数据');
+                    return;
+                }
+                
+                showLoading();
+                
+                setTimeout(() => {
+                    try {
+                        const analysisData = localDatabase.history.slice(0, Math.min(periods, localDatabase.history.length));
+                        const analysisResult = deepAIAnalysis(analysisData);
+                        
+                        localDatabase.analysis = analysisResult;
+                        savePredictionRecord(analysisResult);
+                        localStorage.setItem('lotteryDatabase', JSON.stringify(localDatabase));
+                        
+                        displayAIAnalysisResults(analysisResult);
+                        showSuccess(`AI分析完成！分析了最近 ${analysisData.length} 期数据`);
+                        
+                    } catch (err) {
+                        console.error('AI分析失败:', err);
+                        showError('AI分析失败: ' + err.message);
+                    } finally {
+                        hideLoading();
+                    }
+                }, 100);
+            }
+            
+            // 深度AI分析
+            function deepAIAnalysis(data) {
+                // 确保数据格式正确
+                const validData = data.filter(item => item && item.openCode);
+                
+                const analysis = {
+                    timestamp: new Date().toLocaleString(),
+                    totalPeriods: validData.length,
+                    dataRange: {
+                        start: validData[validData.length - 1] ? validData[validData.length - 1].openTime : '无数据',
+                        end: validData[0] ? validData[0].openTime : '无数据'
+                    },
+                    basicStats: getBasicStats(validData),
+                    specialCodeAnalysis: analyzeSpecialCodeDeep(validData),
+                    waveAnalysis: analyzeWavePatterns(validData),
+                    zodiacAnalysis: analyzeZodiacPatterns(validData),
+                    predictions: generateSmartPredictions(validData),
+                    zodiacPredictions: generateZodiacPredictions(validData),
+                    conclusions: generateConclusions(validData)
+                };
+                
+                return analysis;
+            }
+            
+            // 获取基础统计
+            function getBasicStats(data) {
+                const stats = {
+                    totalDraws: data.length,
+                    dateRange: {
+                        start: data[data.length - 1] ? data[data.length - 1].openTime.split(' ')[0] : '无数据',
+                        end: data[0] ? data[0].openTime.split(' ')[0] : '无数据'
+                    },
+                    specialCodeStats: {}
+                };
+                
+                const specialCodeCount = {};
+                data.forEach(item => {
+                    if (item.openCode) {
+                        const numbers = item.openCode.split(',');
+                        if (numbers.length >= 7) {
+                            const specialCode = parseInt(numbers[6]);
+                            specialCodeCount[specialCode] = (specialCodeCount[specialCode] || 0) + 1;
+                        }
+                    }
+                });
+                
+                stats.specialCodeStats = Object.entries(specialCodeCount)
+                    .map(([code, count]) => ({
+                        code: parseInt(code),
+                        count,
+                        frequency: (count / data.length * 100).toFixed(2) + '%'
+                    }))
+                    .sort((a, b) => b.count - a.count)
+                    .slice(0, 10);
+                
+                return stats;
+            }
+            
+            // 深度特码分析
+            function analyzeSpecialCodeDeep(data) {
+                const analysis = {
+                    parityAnalysis: {},
+                    sizeAnalysis: {}
+                };
+                
+                let oddCount = 0, evenCount = 0;
+                let bigCount = 0, smallCount = 0;
+                
+                data.forEach(item => {
+                    if (item.openCode) {
+                        const numbers = item.openCode.split(',');
+                        if (numbers.length >= 7) {
+                            const specialCode = parseInt(numbers[6]);
+                            if (specialCode % 2 === 0) evenCount++;
+                            else oddCount++;
+                            
+                            if (specialCode > 25) bigCount++;
+                            else smallCount++;
+                        }
+                    }
+                });
+                
+                analysis.parityAnalysis = {
+                    odd: { count: oddCount, percentage: (oddCount / data.length * 100).toFixed(2) + '%' },
+                    even: { count: evenCount, percentage: (evenCount / data.length * 100).toFixed(2) + '%' }
+                };
+                
+                analysis.sizeAnalysis = {
+                    big: { count: bigCount, percentage: (bigCount / data.length * 100).toFixed(2) + '%' },
+                    small: { count: smallCount, percentage: (smallCount / data.length * 100).toFixed(2) + '%' }
+                };
+                
+                return analysis;
+            }
+            
+            // 波色模式分析
+            function analyzeWavePatterns(data) {
+                const trends = {
+                    red: 0,
+                    blue: 0,
+                    green: 0
+                };
+                
+                data.forEach(item => {
+                    if (item.wave) {
+                        const waves = item.wave.split(',');
+                        if (waves.length >= 7) {
+                            const specialWave = waves[6];
+                            if (trends.hasOwnProperty(specialWave)) {
+                                trends[specialWave]++;
+                            }
+                        }
+                    }
+                });
+                
+                trends.redPercentage = (trends.red / data.length * 100).toFixed(2) + '%';
+                trends.bluePercentage = (trends.blue / data.length * 100).toFixed(2) + '%';
+                trends.greenPercentage = (trends.green / data.length * 100).toFixed(2) + '%';
+                
+                return trends;
+            }
+            
+            // 生肖模式分析
+            function analyzeZodiacPatterns(data) {
+                const patterns = {};
+                const zodiacCount = {};
+                
+                data.forEach(item => {
+                    if (item.zodiac) {
+                        const zodiacs = item.zodiac.split(',');
+                        if (zodiacs.length >= 7) {
+                            const specialZodiac = zodiacs[6];
+                            zodiacCount[specialZodiac] = (zodiacCount[specialZodiac] || 0) + 1;
+                        }
+                    }
+                });
+                
+                patterns.zodiacFrequency = Object.entries(zodiacCount)
+                    .map(([zodiac, count]) => ({
+                        zodiac,
+                        count,
+                        percentage: (count / data.length * 100).toFixed(2) + '%'
+                    }))
+                    .sort((a, b) => b.count - a.count);
+                
+                return patterns;
+            }
+            
+            // 生成智能预测
+            function generateSmartPredictions(data) {
+                const hotNumbers = getBasicStats(data).specialCodeStats.slice(0, 5);
+                const waveTrends = analyzeWavePatterns(data);
+                
+                const dominantWave = Object.entries(waveTrends)
+                    .filter(([key]) => !key.includes('Percentage'))
+                    .sort((a, b) => b[1] - a[1])[0];
+                
+                return {
+                    recommendedNumbers: hotNumbers.map(item => item.code),
+                    waveFocus: dominantWave ? dominantWave[0] : 'blue',
+                    confidence: calculateConfidence(data),
+                    reasoning: '基于历史数据的热号分析和波色趋势预测'
+                };
+            }
+            
+            // 生成生肖预测
+            function generateZodiacPredictions(data) {
+                const zodiacStats = analyzeZodiacPatterns(data);
+                const topZodiacs = zodiacStats.zodiacFrequency.slice(0, 6);
+                
+                return {
+                    topZodiacs: topZodiacs,
+                    reasoning: '基于历史数据出现频率最高的生肖预测'
+                };
+            }
+            
+            // 计算置信度
+            function calculateConfidence(data) {
+                if (data.length < 30) return '较低';
+                if (data.length < 70) return '中等';
+                return '较高';
+            }
+            
+            // 生成分析结论
+            function generateConclusions(data) {
+                const conclusions = [];
+                
+                if (data.length >= 50) {
+                    conclusions.push('数据量充足，分析结果可靠性较高');
+                } else {
+                    conclusions.push('数据量有限，建议收集更多数据后重新分析');
+                }
+                
+                const waveAnalysis = analyzeWavePatterns(data);
+                const maxWave = Object.entries(waveAnalysis)
+                    .filter(([key]) => !key.includes('Percentage'))
+                    .sort((a, b) => b[1] - a[1])[0];
+                
+                if (maxWave) {
+                    conclusions.push(`近期${maxWave[0]}波出现频率最高（${waveAnalysis[maxWave[0] + 'Percentage']}）`);
+                }
+                
+                conclusions.push('建议结合多种分析方法综合判断');
+                conclusions.push('彩票有风险，投资需谨慎');
+                
+                return conclusions;
+            }
+            
+            // 保存预测记录
+            function savePredictionRecord(analysisResult) {
+                if (!localDatabase.predictions) {
+                    localDatabase.predictions = [];
+                }
+                
+                const predictionRecord = {
+                    id: Date.now(),
+                    timestamp: new Date().toLocaleString(),
+                    period: analysisResult.totalPeriods,
+                    predictedNumbers: analysisResult.predictions.recommendedNumbers,
+                    predictedZodiacs: analysisResult.zodiacPredictions.topZodiacs.map(item => item.zodiac),
+                    actualResult: null,
+                    isCorrect: null
+                };
+                
+                localDatabase.predictions.unshift(predictionRecord);
+            }
+            
+            // 显示AI分析结果
+            function displayAIAnalysisResults(analysis) {
+                aiAnalysisResults.innerHTML = `
+                    <div class="analysis-report">
+                        <div class="report-header">
+                            <div class="report-meta">
+                                <span>分析时间: ${analysis.timestamp}</span>
+                                <span>分析期数: ${analysis.totalPeriods}期</span>
+                            </div>
+                        </div>
+                        
+                        <div class="analysis-grid">
+                            <div class="analysis-card">
+                                <h4><i>📈</i> 基础统计</h4>
+                                <div class="stats-grid">
+                                    <div class="stat-item">
+                                        <div class="stat-label">总期数</div>
+                                        <div class="stat-value">${analysis.basicStats.totalDraws}</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-label">数据范围</div>
+                                        <div class="stat-value">${analysis.basicStats.dateRange.start} 至 ${analysis.basicStats.dateRange.end}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="analysis-card">
+                                <h4><i>🎯</i> 特码分析</h4>
+                                <div class="pattern-list">
+                                    <div class="pattern-item">
+                                        <span>奇偶比例</span>
+                                        <span class="pattern-value">${analysis.specialCodeAnalysis.parityAnalysis.odd.percentage} / ${analysis.specialCodeAnalysis.parityAnalysis.even.percentage}</span>
+                                    </div>
+                                    <div class="pattern-item">
+                                        <span>大小比例</span>
+                                        <span class="pattern-value">${analysis.specialCodeAnalysis.sizeAnalysis.big.percentage} / ${analysis.specialCodeAnalysis.sizeAnalysis.small.percentage}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="analysis-card">
+                                <h4><i>🎨</i> 波色趋势</h4>
+                                <div class="pattern-list">
+                                    <div class="pattern-item">
+                                        <span>红波</span>
+                                        <span class="pattern-value">${analysis.waveAnalysis.redPercentage}</span>
+                                    </div>
+                                    <div class="pattern-item">
+                                        <span>蓝波</span>
+                                        <span class="pattern-value">${analysis.waveAnalysis.bluePercentage}</span>
+                                    </div>
+                                    <div class="pattern-item">
+                                        <span>绿波</span>
+                                        <span class="pattern-value">${analysis.waveAnalysis.greenPercentage}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="analysis-card prediction-card">
+                                <h4><i>🔮</i> 预测建议</h4>
+                                <div class="prediction-numbers">
+                                    ${analysis.predictions.recommendedNumbers.map(num => `
+                                        <div class="prediction-number">${num}</div>
+                                    `).join('')}
+                                </div>
+                                <div class="prediction-info">
+                                    <div>重点波色: ${analysis.predictions.waveFocus}</div>
+                                    <div>置信度: ${analysis.predictions.confidence}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="analysis-card">
+                                <h4><i>🐭</i> 下期特码生肖预测</h4>
+                                <div class="hot-numbers">
+                                    ${analysis.zodiacPredictions.topZodiacs.map(item => `
+                                        <div class="hot-number">
+                                            <span class="number">${item.zodiac}</span>
+                                            <span class="count">${item.percentage}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <div style="margin-top: 10px; font-size: 0.8rem; color: #666;">
+                                    ${analysis.zodiacPredictions.reasoning}
+                                </div>
+                            </div>
+                            
+                            <div class="analysis-card">
+                                <h4><i>🔥</i> 热门号码</h4>
+                                <div class="hot-numbers">
+                                    ${analysis.basicStats.specialCodeStats.slice(0, 8).map(item => `
+                                        <div class="hot-number">
+                                            <span class="number">${item.code}</span>
+                                            <span class="count">${item.count}次</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="analysis-card warning-card">
+                                <h4><i>💡</i> 分析结论</h4>
+                                <div class="warnings">
+                                    ${analysis.conclusions.map(conclusion => `
+                                        <div class="warning-item">${conclusion}</div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
             }
             
             // 分析走势
@@ -882,21 +1895,13 @@
                 
                 showLoading();
                 
-                // 模拟分析过程
                 setTimeout(() => {
-                    // 限制分析期数
                     const analysisData = historyData.slice(0, Math.min(periods, historyData.length));
                     
-                    // 统计特码出现次数
                     const specialCodeStats = analyzeSpecialCode(analysisData);
-                    
-                    // 统计特码波色出现次数
                     const waveStats = analyzeWave(analysisData);
-                    
-                    // 统计特码生肖出现次数
                     const zodiacStats = analyzeZodiac(analysisData);
                     
-                    // 显示分析结果
                     displayTrendResults(specialCodeStats, waveStats, zodiacStats, analysisData.length);
                     
                     hideLoading();
@@ -910,7 +1915,7 @@
                 
                 data.forEach(item => {
                     const numbers = item.openCode.split(',');
-                    const specialCode = parseInt(numbers[6]); // 第七个数字是特码
+                    const specialCode = parseInt(numbers[6]);
                     
                     if (!stats[specialCode]) {
                         stats[specialCode] = 0;
@@ -918,7 +1923,6 @@
                     stats[specialCode]++;
                 });
                 
-                // 转换为数组并排序
                 return Object.entries(stats)
                     .map(([code, count]) => ({ code: parseInt(code), count }))
                     .sort((a, b) => b.count - a.count);
@@ -934,14 +1938,13 @@
                 
                 data.forEach(item => {
                     const waves = item.wave.split(',');
-                    const specialWave = waves[6]; // 第七个波色是特码波色
+                    const specialWave = waves[6];
                     
                     if (stats[specialWave] !== undefined) {
                         stats[specialWave]++;
                     }
                 });
                 
-                // 转换为数组并排序
                 return Object.entries(stats)
                     .map(([wave, count]) => ({ wave, count }))
                     .sort((a, b) => b.count - a.count);
@@ -953,7 +1956,7 @@
                 
                 data.forEach(item => {
                     const zodiacs = item.zodiac.split(',');
-                    const specialZodiac = zodiacs[6]; // 第七个生肖是特码生肖
+                    const specialZodiac = zodiacs[6];
                     
                     if (!stats[specialZodiac]) {
                         stats[specialZodiac] = 0;
@@ -961,7 +1964,6 @@
                     stats[specialZodiac]++;
                 });
                 
-                // 转换为数组并排序
                 return Object.entries(stats)
                     .map(([zodiac, count]) => ({ zodiac, count }))
                     .sort((a, b) => b.count - a.count);
@@ -1040,123 +2042,6 @@
                 trendResults.appendChild(zodiacSection);
             }
             
-            // 初始化倒计时
-            function initCountdown() {
-                updateCountdown();
-                // 每秒更新一次倒计时
-                setInterval(updateCountdown, 1000);
-            }
-            
-            // 更新倒计时
-            function updateCountdown() {
-                const now = new Date();
-                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                
-                // 设置开奖时间为北京时间21:34
-                const drawTime = new Date(today);
-                drawTime.setHours(21, 34, 0, 0);
-                
-                // 如果今天已经过了开奖时间，则计算明天的开奖时间
-                if (now > drawTime) {
-                    drawTime.setDate(drawTime.getDate() + 1);
-                }
-                
-                // 计算时间差（毫秒）
-                const diff = drawTime - now;
-                
-                // 计算小时、分钟、秒
-                const hours = Math.floor(diff / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
-                // 更新倒计时显示
-                countdownHours.textContent = hours.toString().padStart(2, '0');
-                countdownMinutes.textContent = minutes.toString().padStart(2, '0');
-                countdownSeconds.textContent = seconds.toString().padStart(2, '0');
-                
-                // 更新下一期开奖时间显示
-                const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-                const weekday = weekdays[drawTime.getDay()];
-                nextDrawTime.textContent = `${drawTime.getFullYear()}-${(drawTime.getMonth()+1).toString().padStart(2, '0')}-${drawTime.getDate().toString().padStart(2, '0')} 21:34:00 ${weekday}`;
-                
-                // 更新当前期号（基于日期计算）
-                const year = drawTime.getFullYear();
-                const startOfYear = new Date(year, 0, 1);
-                const dayOfYear = Math.floor((drawTime - startOfYear) / (1000 * 60 * 60 * 24)) + 1;
-                const period = `${year}${dayOfYear.toString().padStart(3, '0')}`;
-                currentPeriod.textContent = `第 ${period} 期`;
-            }
-            
-            // 初始化五行对照表
-            function initElementTable() {
-                const elements = Object.keys(elementNumbers);
-                const half = Math.ceil(elements.length / 2);
-                
-                for (let i = 0; i < half; i++) {
-                    const row = document.createElement('tr');
-                    
-                    // 第一列五行
-                    const element1 = elements[i];
-                    const cell1 = document.createElement('td');
-                    cell1.innerHTML = `<span class="element-color-${getElementClass(element1)}">${element1}</span>`;
-                    row.appendChild(cell1);
-                    
-                    const numbers1 = document.createElement('td');
-                    numbers1.textContent = elementNumbers[element1].join(', ');
-                    row.appendChild(numbers1);
-                    
-                    // 第二列五行（如果存在）
-                    if (i + half < elements.length) {
-                        const element2 = elements[i + half];
-                        const cell2 = document.createElement('td');
-                        cell2.innerHTML = `<span class="element-color-${getElementClass(element2)}">${element2}</span>`;
-                        row.appendChild(cell2);
-                        
-                        const numbers2 = document.createElement('td');
-                        numbers2.textContent = elementNumbers[element2].join(', ');
-                        row.appendChild(numbers2);
-                    } else {
-                        // 如果第二列不存在，添加空单元格
-                        row.appendChild(document.createElement('td'));
-                        row.appendChild(document.createElement('td'));
-                    }
-                    
-                    elementTableBody.appendChild(row);
-                }
-            }
-            
-            // 获取五行对应的CSS类名
-            function getElementClass(element) {
-                const elementMap = {
-                    '金': 'gold',
-                    '木': 'wood',
-                    '水': 'water',
-                    '火': 'fire',
-                    '土': 'earth'
-                };
-                return elementMap[element] || 'earth';
-            }
-            
-            // 根据号码获取生肖
-            function getZodiacByNumber(number) {
-                for (const [zodiac, numbers] of Object.entries(zodiacNumbers)) {
-                    if (numbers.includes(parseInt(number))) {
-                        return zodiac;
-                    }
-                }
-                return '未知';
-            }
-            
-            // 根据号码获取五行
-            function getElementByNumber(number) {
-                for (const [element, numbers] of Object.entries(elementNumbers)) {
-                    if (numbers.includes(parseInt(number))) {
-                        return element;
-                    }
-                }
-                return '未知';
-            }
-            
             // 获取最新开奖结果
             async function fetchLatestResults() {
                 showLoading();
@@ -1177,6 +2062,7 @@
                     showDebugInfo(`API返回数据: ${JSON.stringify(data, null, 2)}`);
                     
                     if (data && Array.isArray(data) && data.length > 0) {
+                        historyData = data;
                         displayResults(data, '最新开奖结果');
                         showSuccess('成功获取最新开奖结果');
                     } else {
@@ -1211,6 +2097,7 @@
                     showDebugInfo(`API返回数据: ${JSON.stringify(data, null, 2)}`);
                     
                     if (data && Array.isArray(data) && data.length > 0) {
+                        historyData = data;
                         displayResults(data, '实时开奖结果');
                         showSuccess('成功获取实时开奖结果');
                     } else {
@@ -1246,15 +2133,12 @@
                     showDebugInfo(`API返回原始数据: ${JSON.stringify(data, null, 2)}`);
                     
                     if (data && data.result && Array.isArray(data.data)) {
-                        // 存储历史数据用于走势分析
                         historyData = data.data;
                         
-                        // 调试：显示所有期号
                         const allExpects = data.data.map(item => item.expect);
                         showDebugInfo(`所有期号: ${allExpects.join(', ')}`);
                         showDebugInfo(`总数据条数: ${data.data.length}`);
                         
-                        // 去重处理：基于期号去重
                         const uniqueData = [];
                         const seenExpects = new Set();
                         
@@ -1268,7 +2152,6 @@
                         showDebugInfo(`去重后期号: ${uniqueData.map(item => item.expect).join(', ')}`);
                         showDebugInfo(`去重后数据条数: ${uniqueData.length}`);
                         
-                        // 按期号倒序排列并限制数量
                         const sortedData = uniqueData.sort((a, b) => {
                             return parseInt(b.expect) - parseInt(a.expect);
                         });
@@ -1277,6 +2160,7 @@
                         showDebugInfo(`最终显示期号: ${limitedData.map(item => item.expect).join(', ')}`);
                         
                         if (limitedData.length > 0) {
+                            historyData = limitedData;
                             displayResults(limitedData, `${year}年历史开奖结果（最近${count}期）`);
                             showSuccess(`成功获取${year}年最近${count}期历史开奖结果`);
                         } else {
@@ -1296,12 +2180,10 @@
             
             // 禁用/启用按钮
             function disableButtons(disabled) {
-                latestBtn.disabled = disabled;
-                liveBtn.disabled = disabled;
-                historyBtn.disabled = disabled;
-                trendBtn.disabled = disabled;
-                debugBtn.disabled = disabled;
-                analyzeTrendBtn.disabled = disabled;
+                const buttons = [latestBtn, liveBtn, historyBtn, trendBtn, debugBtn, analyzeTrendBtn, saveToDbBtn, analyzeWithAIBtn, analyzeWithAIBtn2, dbManageBtn];
+                buttons.forEach(btn => {
+                    if (btn) btn.disabled = disabled;
+                });
             }
             
             // 显示调试信息
@@ -1356,13 +2238,12 @@
                     return;
                 }
                 
-                // 显示数据统计
                 showDebugInfo(`准备显示 ${data.length} 条数据`);
                 
                 data.forEach((item, index) => {
                     const numbers = item.openCode.split(',');
-                    const waves = item.wave.split(',');
-                    const zodiacs = item.zodiac.split(',');
+                    const waves = item.wave ? item.wave.split(',') : ['blue', 'blue', 'blue', 'blue', 'blue', 'blue', 'blue'];
+                    const zodiacs = item.zodiac ? item.zodiac.split(',') : ['鼠', '牛', '虎', '兔', '龙', '蛇', '马'];
                     
                     const resultItem = document.createElement('div');
                     resultItem.className = 'result-item';
@@ -1375,9 +2256,8 @@
                         <div class="numbers">
                             ${numbers.map((num, index) => {
                                 const numInt = parseInt(num);
-                                let bgColor = '#1a2a6c'; // 默认蓝色
+                                let bgColor = '#1a2a6c';
                                 
-                                // 根据波色设置背景颜色
                                 if (index < waves.length) {
                                     if (waves[index] === 'red') bgColor = '#b21f1f';
                                     else if (waves[index] === 'green') bgColor = '#2a6c2a';
@@ -1397,7 +2277,7 @@
                         </div>
                         <div class="wave">
                             ${waves.map(wave => {
-                                let bgColor = '#1a2a6c'; // 默认蓝色
+                                let bgColor = '#1a2a6c';
                                 if (wave === 'red') bgColor = '#b21f1f';
                                 else if (wave === 'green') bgColor = '#2a6c2a';
                                 
@@ -1408,7 +2288,7 @@
                             ${zodiacs.map(zodiac => `<div class="zodiac-item">${zodiac}</div>`).join('')}
                         </div>
                         <div style="margin-top: 15px; font-size: 0.9rem; color: #666;">
-                            验证状态: ${item.verify ? '已验证' : '未验证'} | 类型: ${item.type}
+                            验证状态: ${item.verify ? '已验证' : '未验证'} | 类型: ${item.type || '未知'}
                         </div>
                     `;
                     
@@ -1416,6 +2296,18 @@
                 });
                 
                 resultContainer.style.display = 'block';
+            }
+            
+            // 调试模式切换
+            function toggleDebugMode() {
+                debugMode = !debugMode;
+                debugBtn.style.background = debugMode ? 
+                    'linear-gradient(to right, #ff6b6b, #4ecdc4)' : 
+                    'linear-gradient(to right, #1a2a6c, #b21f1f)';
+                debugBtn.innerHTML = debugMode ? 
+                    '<i>🐛</i> 关闭调试' : 
+                    '<i>🐛</i> 调试模式';
+                showDebugInfo('调试模式 ' + (debugMode ? '已开启' : '已关闭'));
             }
         });
     </script>
