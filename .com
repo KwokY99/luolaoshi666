@@ -3,1422 +3,2426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>罗老师666开奖查询系统</title>
+    <title>模拟统计界面 - 独立参照弹窗</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Microsoft YaHei', Arial, sans-serif;
-        }
-        
+        /* 样式保持不变，只添加新样式 */
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            min-height: 100vh;
-            padding: 20px;
-            color: #333;
+            font-family: "Microsoft Yahei", sans-serif;
+            background: #f0f0f0;
+            margin: 20px;
         }
-        
         .container {
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
             max-width: 1200px;
-            margin: 0 auto;
         }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: white;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-        
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
-        .countdown-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            padding: 25px;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-        
-        .countdown-title {
-            color: #1a2a6c;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+        .top-bar {
             display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .countdown-title i {
-            margin-right: 10px;
-            color: #b21f1f;
-        }
-        
-        .countdown-info {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-        
-        .current-period {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #1a2a6c;
-        }
-        
-        .next-draw-time {
-            font-size: 1.1rem;
-            color: #b21f1f;
-        }
-        
-        .countdown-timer {
-            display: flex;
-            justify-content: center;
             gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .countdown-unit {
-            background: linear-gradient(to bottom, #1a2a6c, #0d1a4d);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            min-width: 80px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .countdown-value {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .countdown-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            padding: 25px;
-            margin-bottom: 25px;
-            transition: transform 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .card h2 {
-            color: #1a2a6c;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #fdbb2d;
-            display: flex;
-            align-items: center;
-        }
-        
-        .card h2 i {
-            margin-right: 10px;
-            color: #b21f1f;
-        }
-        
-        .controls {
-            display: flex;
+            border-bottom: 1px solid #ccc;
             flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
         }
-        
-        button {
-            background: linear-gradient(to right, #1a2a6c, #b21f1f);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
+        .top-bar button {
+            padding: 8px 16px;
+            font-size: 16px;
             cursor: pointer;
-            font-size: 1rem;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+        .top-bar button:hover {
+            background: #e0e0e0;
+        }
+        .top-bar button.recognize-btn {
+            background: #ff6b6b;
+            color: white;
             font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .top-bar button.recognize-btn:hover {
+            background: #ff5252;
+        }
+        .top-bar button.save-btn {
+            background: #27ae60;
+            color: white;
+            font-weight: bold;
+        }
+        .top-bar button.save-btn:hover {
+            background: #219a52;
+        }
+        .customer-info {
+            margin-bottom: 10px;
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            justify-content: center;
-        }
-        
-        button i {
-            margin-right: 8px;
-        }
-        
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        button:active {
-            transform: translateY(1px);
-        }
-        
-        button:disabled {
-            background: #cccccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .year-input, .count-input, .periods-input {
-            padding: 12px 15px;
-            border: 2px solid #ddd;
-            border-radius: 50px;
-            font-size: 1rem;
-            width: 150px;
-            transition: border-color 0.3s;
-        }
-        
-        .year-input:focus, .count-input:focus, .periods-input:focus {
-            border-color: #1a2a6c;
-            outline: none;
-        }
-        
-        .result-container {
-            margin-top: 20px;
-            display: none;
-        }
-        
-        .result-item {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-left: 5px solid #1a2a6c;
-        }
-        
-        .result-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .expect {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #1a2a6c;
-        }
-        
-        .open-time {
-            color: #666;
-            font-size: 0.9rem;
-        }
-        
-        .numbers {
-            display: flex;
-            flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 15px;
         }
-        
-        .number {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
+        .table-area {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .col {
             display: flex;
             flex-direction: column;
+            gap: 8px;
+        }
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .row span {
+            width: 50px;
+            font-weight: bold;
+        }
+        .row input {
+            flex: 1;
+            padding: 4px;
+            border: 1px solid #ccc;
+        }
+        .red { color: red; }
+        .blue { color: blue; }
+        .green { color: green; }
+        .summary {
+            margin-top: 15px;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        .amount-item {
+            font-weight: bold;
+        }
+        .current-amount {
+            color: #ff6600;
+        }
+        .accumulate-amount {
+            color: #0099ff;
+        }
+        .data-code {
+            margin-left: auto;
+            color: #666;
+        }
+
+        /* 识别弹窗 */
+        .recognize-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: white;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-            position: relative;
+            z-index: 2000;
         }
-        
-        .number-zodiac {
-            font-size: 0.7rem;
-            margin-top: 2px;
-        }
-        
-        .number-element {
-            font-size: 0.6rem;
-            margin-top: 1px;
-            opacity: 0.9;
-        }
-        
-        .wave {
+        .recognize-content {
+            background: white;
+            width: 700px;
+            max-width: 95%;
+            max-height: 80vh;
+            border-radius: 24px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.4);
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .wave-item {
-            padding: 5px 15px;
-            border-radius: 20px;
-            color: white;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-        
-        .zodiac {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .zodiac-item {
-            padding: 5px 15px;
-            border-radius: 20px;
-            background: #f5f5f5;
-            font-weight: bold;
-            font-size: 0.9rem;
-            border: 1px solid #ddd;
-        }
-        
-        .loading {
-            text-align: center;
+            flex-direction: column;
             padding: 30px;
-            display: none;
         }
-        
-        .spinner {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #1a2a6c;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .error {
-            background: #ffecec;
-            color: #b21f1f;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            display: none;
-            border-left: 5px solid #b21f1f;
-        }
-        
-        .success {
-            background: #ecf9ec;
-            color: #2a6c2a;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            display: none;
-            border-left: 5px solid #2a6c2a;
-        }
-        
-        .debug-info {
-            background: #f0f8ff;
-            color: #1a2a6c;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            display: none;
-            border-left: 5px solid #1a2a6c;
-            font-family: monospace;
-            font-size: 0.9rem;
-            white-space: pre-wrap;
-        }
-        
-        /* 新版生肖对照表样式 */
-        .zodiac-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .zodiac-column {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        .zodiac-header {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        
-        .zodiac-number {
-            padding: 5px;
-            margin: 3px 0;
-            background: #f8f9fa;
-            border-radius: 5px;
-            font-weight: bold;
-            color: #1a2a6c;
-            border: 1px solid #e9ecef;
-        }
-        
-        .element-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        
-        .element-table th, .element-table td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-        
-        .element-table th {
-            background-color: #1a2a6c;
-            color: white;
-        }
-        
-        .element-table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        .element-table tr:hover {
-            background-color: #f1f1f1;
-        }
-        
-        .element-color-gold { color: #ffd700; font-weight: bold; }
-        .element-color-wood { color: #228B22; font-weight: bold; }
-        .element-color-water { color: #1E90FF; font-weight: bold; }
-        .element-color-fire { color: #FF4500; font-weight: bold; }
-        .element-color-earth { color: #8B4513; font-weight: bold; }
-        
-        /* 走势图样式 */
-        .trend-controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-            align-items: center;
-        }
-        
-        .trend-results {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .trend-section {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .trend-section h3 {
-            color: #1a2a6c;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #fdbb2d;
-        }
-        
-        .trend-item {
+        .recognize-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 3px solid #ff6b6b;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .recognize-header h3 {
+            margin: 0;
+            font-size: 2rem;
+            color: #ff6b6b;
+            font-weight: 700;
+        }
+        .recognize-close {
+            font-size: 40px;
+            cursor: pointer;
+            color: #95a5a6;
+        }
+        .recognize-close:hover {
+            color: #e74c3c;
+        }
+        .recognize-input-area {
+            margin-bottom: 20px;
+        }
+        .recognize-input-area textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: monospace;
+            resize: vertical;
+        }
+        .recognize-input-area textarea:focus {
+            border-color: #ff6b6b;
+            outline: none;
+        }
+        .recognize-example {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: #2c3e50;
+            border-left: 4px solid #ff6b6b;
+        }
+        .recognize-example p {
+            margin: 5px 0;
+        }
+        .recognize-example code {
+            background: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #e74c3c;
+        }
+        .recognize-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+        .recognize-actions button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-parse {
+            background: #ff6b6b;
+            color: white;
+        }
+        .btn-parse:hover {
+            background: #ff5252;
+        }
+        .btn-cancel {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+        .btn-cancel:hover {
+            background: #bdc3c7;
+        }
+        .parse-result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #f0f9f0;
+            color: #27ae60;
+            display: none;
+        }
+        .parse-result.show {
+            display: block;
+        }
+
+        /* 保存记录弹窗 */
+        .save-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 2001;
+        }
+        .save-content {
+            background: white;
+            width: 500px;
+            max-width: 95%;
+            border-radius: 24px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+        }
+        .save-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #27ae60;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .save-header h3 {
+            margin: 0;
+            font-size: 2rem;
+            color: #27ae60;
+            font-weight: 700;
+        }
+        .save-close {
+            font-size: 40px;
+            cursor: pointer;
+            color: #95a5a6;
+        }
+        .save-close:hover {
+            color: #e74c3c;
+        }
+        .save-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .save-info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        .save-info-item .label {
+            color: #7f8c8d;
+        }
+        .save-info-item .value {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .save-input-area {
+            margin-bottom: 20px;
+        }
+        .save-input-area label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .save-input-area input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
+        .save-input-area input:focus {
+            border-color: #27ae60;
+            outline: none;
+        }
+        .save-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+        .save-actions button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-save {
+            background: #27ae60;
+            color: white;
+        }
+        .btn-save:hover {
+            background: #219a52;
+        }
+        .btn-cancel-save {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+        .btn-cancel-save:hover {
+            background: #bdc3c7;
+        }
+
+        /* 其他弹窗样式保持不变 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            width: 1100px;
+            max-width: 95%;
+            max-height: 90vh;
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .modal-header h3 {
+            margin: 0;
+            font-size: 2rem;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+        .close-btn {
+            font-size: 40px;
+            cursor: pointer;
+            color: #7f8c8d;
+            line-height: 1;
+        }
+        .close-btn:hover {
+            color: #e74c3c;
         }
         
-        .trend-item:last-child {
-            border-bottom: none;
+        .view-toggle {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .view-btn {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border: 2px solid #3498db;
+            background: white;
+            color: #3498db;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .view-btn.active {
+            background: #3498db;
+            color: white;
+        }
+        .view-btn:hover {
+            background: #2980b9;
+            color: white;
         }
         
-        .trend-name {
+        .numbers-grid {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #dde7f0;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+        }
+        .number-card {
+            background: white;
+            border-radius: 14px;
+            padding: 12px 8px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s;
+        }
+        .number-card:hover {
+            transform: translateY(-3px);
+            border-color: #3498db;
+        }
+        .number-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        .number-badge {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background: #34495e;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        .animal-tag {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #16a085;
+            background: #e8f8f5;
+            padding: 4px 10px;
+            border-radius: 30px;
+        }
+        .amount-display {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2980b9;
+            background: #ebf5ff;
+            padding: 8px 5px;
+            border-radius: 10px;
+        }
+        
+        .animals-grid {
+            background: #f5f0fa;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #d0b7e6;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .animal-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(142,68,173,0.15);
+            border: 1px solid #e0d0f0;
+            transition: transform 0.2s;
+        }
+        .animal-card:hover {
+            transform: translateY(-5px);
+            border-color: #9b59b6;
+        }
+        .animal-icon {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #8e44ad;
+            background: #f4e9ff;
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+        }
+        .animal-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .animal-amount {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #27ae60;
+            background: #e8f8f5;
+            padding: 12px 5px;
+            border-radius: 50px;
+            margin-top: 10px;
+        }
+        .animal-numbers {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 8px;
+            background: #ecf0f1;
+            padding: 5px;
+            border-radius: 30px;
+        }
+        
+        .wave-red {
+            color: #c0392b;
+            background: #fadbd8;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .wave-blue {
+            color: #2980b9;
+            background: #d4e6f1;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .wave-green {
+            color: #27ae60;
+            background: #d5f5e3;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .reference-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+        .reference-content {
+            background: white;
+            width: 900px;
+            max-width: 95%;
+            max-height: 85vh;
+            border-radius: 24px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+        }
+        .reference-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #8e44ad;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .reference-header h3 {
+            margin: 0;
+            font-size: 2rem;
+            color: #8e44ad;
+            font-weight: 700;
+        }
+        .reference-close {
+            font-size: 40px;
+            cursor: pointer;
+            color: #95a5a6;
+        }
+        .reference-close:hover {
+            color: #e74c3c;
+        }
+        .reference-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            overflow-y: auto;
+            max-height: 500px;
+            padding: 10px;
+        }
+        .ref-item {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            border-left: 8px solid;
+            transition: transform 0.2s;
+        }
+        .ref-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .ref-item.鼠 { border-color: #7f8c8d; }
+        .ref-item.牛 { border-color: #8e44ad; }
+        .ref-item.虎 { border-color: #e67e22; }
+        .ref-item.兔 { border-color: #e74c3c; }
+        .ref-item.龙 { border-color: #f1c40f; }
+        .ref-item.蛇 { border-color: #2ecc71; }
+        .ref-item.马 { border-color: #3498db; }
+        .ref-item.羊 { border-color: #1abc9c; }
+        .ref-item.猴 { border-color: #9b59b6; }
+        .ref-item.鸡 { border-color: #e67e22; }
+        .ref-item.狗 { border-color: #e74c3c; }
+        .ref-item.猪 { border-color: #95a5a6; }
+        
+        .ref-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .ref-numbers {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .ref-number-row {
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 1.2rem;
+            padding: 5px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .ref-number-value {
+            font-weight: 700;
+            min-width: 40px;
         }
         
-        .trend-count {
+        .wave-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1002;
+        }
+        .wave-content {
+            background: white;
+            width: 800px;
+            max-width: 95%;
+            max-height: 80vh;
+            border-radius: 24px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+        }
+        .wave-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #e67e22;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .wave-header h3 {
+            margin: 0;
+            font-size: 2rem;
+            color: #e67e22;
+            font-weight: 700;
+        }
+        .wave-close {
+            font-size: 40px;
+            cursor: pointer;
+            color: #95a5a6;
+        }
+        .wave-close:hover {
+            color: #e74c3c;
+        }
+        .wave-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            overflow-y: auto;
+            max-height: 500px;
+            padding: 15px;
+        }
+        .wave-section {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .wave-section.red-section {
+            border-top: 8px solid #e74c3c;
+        }
+        .wave-section.blue-section {
+            border-top: 8px solid #3498db;
+        }
+        .wave-section.green-section {
+            border-top: 8px solid #27ae60;
+        }
+        .wave-section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .wave-section-title.red { color: #e74c3c; }
+        .wave-section-title.blue { color: #3498db; }
+        .wave-section-title.green { color: #27ae60; }
+        
+        .wave-numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .wave-number-item {
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 10px;
+            border-radius: 12px;
+        }
+        .wave-number-item.red {
+            background: #fadbd8;
+            color: #c0392b;
+        }
+        .wave-number-item.blue {
+            background: #d4e6f1;
+            color: #2980b9;
+        }
+        .wave-number-item.green {
+            background: #d5f5e3;
+            color: #27ae60;
+        }
+        
+        .highlight-max {
+            border: 3px solid #f39c12 !important;
+            background: #fff9e6 !important;
+        }
+        .highlight-min {
+            border: 3px solid #3498db !important;
+            background: #e8f0fe !important;
+        }
+        
+        .filter-bar {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            align-items: center;
+            background: #ecf0f1;
+            padding: 18px 25px;
+            border-radius: 60px;
+        }
+        .filter-bar label {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+        .filter-bar select {
+            padding: 12px 25px;
+            border: 2px solid #3498db;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            background: white;
+            min-width: 220px;
+            cursor: pointer;
+        }
+        .filter-bar button {
+            padding: 12px 35px;
+            background: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
             font-weight: bold;
-            color: #1a2a6c;
+        }
+        .filter-bar button:hover {
+            background: #1f618d;
+        }
+        .total-accum-bar {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #1a5276;
+            background: #d4e6f1;
+            padding: 18px 30px;
+            border-radius: 60px;
+            text-align: right;
+            border: 2px solid #2980b9;
+        }
+        .total-accum-bar span {
+            color: #c0392b;
+            font-size: 2.3rem;
+            margin-left: 25px;
+            background: #fadbd8;
+            padding: 8px 30px;
+            border-radius: 60px;
+        }
+
+        /* 保存记录列表弹窗 */
+        .history-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1003;
         }
         
-        .trend-bar {
-            flex-grow: 1;
-            height: 20px;
-            background: #f0f0f0;
-            border-radius: 10px;
-            margin: 0 15px;
+        .history-content {
+            background: white;
+            width: 1100px;
+            max-width: 95%;
+            max-height: 85vh;
+            border-radius: 24px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .history-header h3 {
+            margin: 0;
+            font-size: 2rem;
+            color: #667eea;
+            font-weight: 700;
+        }
+        
+        .history-close {
+            font-size: 40px;
+            cursor: pointer;
+            color: #95a5a6;
+        }
+        
+        .history-close:hover {
+            color: #e74c3c;
+        }
+        
+        .history-stats {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .total-stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+        
+        .stat-item {
+            flex: 1;
+        }
+        
+        .stat-label {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .stat-value.total {
+            color: #e74c3c;
+        }
+        
+        .stat-value.avg {
+            color: #3498db;
+        }
+        
+        .stat-value.count {
+            color: #27ae60;
+        }
+        
+        .history-list {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e0e0e0;
             overflow: hidden;
         }
         
-        .trend-bar-fill {
-            height: 100%;
-            background: linear-gradient(to right, #1a2a6c, #b21f1f);
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 30px;
+        .history-list-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr 1.5fr 1fr;
+            background: #667eea;
             color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .history-list-body {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .history-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr 1.5fr 1fr;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ecf0f1;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .history-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .history-item .date {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .history-item .amount {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        
+        .history-item .numbers-count {
+            color: #3498db;
+        }
+        
+        .history-item .remark {
+            color: #e67e22;
+            font-style: italic;
+        }
+        
+        .history-item .delete {
+            color: #e74c3c;
+            cursor: pointer;
+            text-align: right;
+        }
+        
+        .history-item .delete:hover {
+            font-weight: bold;
+        }
+        
+        .history-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+        
+        .history-actions button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .btn-clear-history {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-clear-history:hover {
+            background: #c0392b;
+        }
+        
+        .btn-export {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-export:hover {
+            background: #2980b9;
+        }
+        
+        .btn-refresh {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-refresh:hover {
+            background: #7f8c8d;
+        }
+        
+        /* 记录详情弹窗 */
+        .detail-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1100;
+        }
+        
+        .detail-content {
+            background: white;
+            width: 800px;
+            max-width: 95%;
+            max-height: 80vh;
+            border-radius: 20px;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .detail-header h4 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin: 0;
+        }
+        
+        .detail-close {
+            font-size: 30px;
+            cursor: pointer;
+            color: #95a5a6;
+        }
+        
+        .detail-close:hover {
+            color: #e74c3c;
+        }
+        
+        .detail-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .detail-numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .detail-number-item {
+            background: #f0f3f8;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .detail-number-item .num {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .detail-number-item .animal {
             font-size: 0.9rem;
-            opacity: 0.8;
+            color: #7f8c8d;
+            margin-bottom: 5px;
         }
         
-        @media (max-width: 768px) {
-            .controls, .trend-controls {
-                flex-direction: column;
-            }
-            
-            button {
-                width: 100%;
-            }
-            
-            .year-input, .count-input, .periods-input {
-                width: 100%;
-            }
-            
-            .result-header {
-                flex-direction: column;
-            }
-            
-            .expect {
-                margin-bottom: 5px;
-            }
-            
-            .number {
-                width: 60px;
-                height: 60px;
-                font-size: 1rem;
-            }
-            
-            .number-zodiac, .number-element {
-                font-size: 0.5rem;
-            }
-            
-            .countdown-timer {
-                gap: 10px;
-            }
-            
-            .countdown-unit {
-                min-width: 70px;
-                padding: 10px;
-            }
-            
-            .countdown-value {
-                font-size: 1.5rem;
-            }
-            
-            .trend-results {
-                grid-template-columns: 1fr;
-            }
-            
-            .zodiac-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-            }
-            
-            .zodiac-column {
-                padding: 10px;
-            }
-            
-            .zodiac-header {
-                font-size: 1rem;
-                padding: 8px;
-            }
+        .detail-number-item .val {
+            color: #27ae60;
+            font-weight: bold;
         }
         
-        @media (max-width: 480px) {
-            .zodiac-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .detail-number-item.red .num { color: red; }
+        .detail-number-item.blue .num { color: blue; }
+        .detail-number-item.green .num { color: green; }
+        
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1200;
+        }
+        
+        .confirm-content {
+            background: white;
+            width: 400px;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .confirm-content h4 {
+            font-size: 1.5rem;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+        
+        .confirm-content p {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        
+        .confirm-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .confirm-buttons button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .btn-confirm-yes {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-confirm-yes:hover {
+            background: #c0392b;
+        }
+        
+        .btn-confirm-no {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+        
+        .btn-confirm-no:hover {
+            background: #bdc3c7;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>罗老师666查询系统</h1>
-            <p>实时获取最新开奖结果和历史数据</p>
+        <div class="top-bar">
+            <button>接单</button>
+            <button id="referenceBtn">生肖参照</button>
+            <button id="waveBtn">波色参照</button>
+            <button>操作详单</button>
+            <button id="summaryBtn">汇总</button>
+            <button id="clearAllBtn" style="color:red;">清空累计数据</button>
+            <button id="saveBtn" class="save-btn" style="background: #27ae60; color: white;">💾 保存投注</button>
+            <button id="historyBtn" style="background: #667eea; color: white;">📊 投注记录</button>
+            <button id="reportBtn" style="color:red;">一键上报</button>
+            <button id="recognizeBtn" class="recognize-btn" style="background: #ff6b6b; color: white;">🔍 识别金额</button>
         </div>
-        
-        <!-- 倒计时区域 -->
-        <div class="countdown-section">
-            <div class="countdown-title">
-                <i>⏰</i> 下一期开奖倒计时
+
+        <div class="customer-info">
+            客户: <input type="text" value="2222" style="width: 60px;">
+            <label><input type="checkbox"> 包特</label>
+            <label><input type="checkbox"> 平连码</label>
+            <label><input type="checkbox"> 特平</label>
+            <label><input type="checkbox"> 软键盘</label>
+            <label><input type="checkbox"> 小数/整数</label>
+            <span style="margin-left: 20px;">本单汇总: <span id="orderTotal">0</span></span>
+            <button id="clearOrderBtn" style="margin-left: 20px; color: #ff0000;">清空本单汇总</button>
+        </div>
+
+        <div class="table-area">
+            <!-- 第一列 01~12 -->
+            <div class="col">
+                <div class="row"><span class="red">01马</span><input type="text" class="amount-input" data-number="01" data-animal="马"></div>
+                <div class="row"><span class="red">02蛇</span><input type="text" class="amount-input" data-number="02" data-animal="蛇"></div>
+                <div class="row"><span class="blue">03龙</span><input type="text" class="amount-input" data-number="03" data-animal="龙"></div>
+                <div class="row"><span class="blue">04兔</span><input type="text" class="amount-input" data-number="04" data-animal="兔"></div>
+                <div class="row"><span class="green">05虎</span><input type="text" class="amount-input" data-number="05" data-animal="虎"></div>
+                <div class="row"><span class="green">06牛</span><input type="text" class="amount-input" data-number="06" data-animal="牛"></div>
+                <div class="row"><span class="red">07鼠</span><input type="text" class="amount-input" data-number="07" data-animal="鼠"></div>
+                <div class="row"><span class="red">08猪</span><input type="text" class="amount-input" data-number="08" data-animal="猪"></div>
+                <div class="row"><span class="blue">09狗</span><input type="text" class="amount-input" data-number="09" data-animal="狗"></div>
+                <div class="row"><span class="blue">10鸡</span><input type="text" class="amount-input" data-number="10" data-animal="鸡"></div>
+                <div class="row"><span class="green">11猴</span><input type="text" class="amount-input" data-number="11" data-animal="猴"></div>
+                <div class="row"><span class="red">12羊</span><input type="text" class="amount-input" data-number="12" data-animal="羊"></div>
             </div>
-            <div class="countdown-info">
-                <div class="current-period" id="currentPeriod">第 2025292 期</div>
-                <div class="next-draw-time" id="nextDrawTime">2025-10-19 21:34:00 星期日</div>
+            <!-- 第二列 13~24 -->
+            <div class="col">
+                <div class="row"><span class="red">13马</span><input type="text" class="amount-input" data-number="13" data-animal="马"></div>
+                <div class="row"><span class="blue">14蛇</span><input type="text" class="amount-input" data-number="14" data-animal="蛇"></div>
+                <div class="row"><span class="blue">15龙</span><input type="text" class="amount-input" data-number="15" data-animal="龙"></div>
+                <div class="row"><span class="green">16兔</span><input type="text" class="amount-input" data-number="16" data-animal="兔"></div>
+                <div class="row"><span class="green">17虎</span><input type="text" class="amount-input" data-number="17" data-animal="虎"></div>
+                <div class="row"><span class="red">18牛</span><input type="text" class="amount-input" data-number="18" data-animal="牛"></div>
+                <div class="row"><span class="red">19鼠</span><input type="text" class="amount-input" data-number="19" data-animal="鼠"></div>
+                <div class="row"><span class="blue">20猪</span><input type="text" class="amount-input" data-number="20" data-animal="猪"></div>
+                <div class="row"><span class="green">21狗</span><input type="text" class="amount-input" data-number="21" data-animal="狗"></div>
+                <div class="row"><span class="green">22鸡</span><input type="text" class="amount-input" data-number="22" data-animal="鸡"></div>
+                <div class="row"><span class="red">23猴</span><input type="text" class="amount-input" data-number="23" data-animal="猴"></div>
+                <div class="row"><span class="red">24羊</span><input type="text" class="amount-input" data-number="24" data-animal="羊"></div>
             </div>
-            <div class="countdown-timer">
-                <div class="countdown-unit">
-                    <div class="countdown-value" id="countdownHours">00</div>
-                    <div class="countdown-label">小时</div>
+            <!-- 第三列 25~36 -->
+            <div class="col">
+                <div class="row"><span class="blue">25马</span><input type="text" class="amount-input" data-number="25" data-animal="马"></div>
+                <div class="row"><span class="blue">26蛇</span><input type="text" class="amount-input" data-number="26" data-animal="蛇"></div>
+                <div class="row"><span class="green">27龙</span><input type="text" class="amount-input" data-number="27" data-animal="龙"></div>
+                <div class="row"><span class="green">28兔</span><input type="text" class="amount-input" data-number="28" data-animal="兔"></div>
+                <div class="row"><span class="red">29虎</span><input type="text" class="amount-input" data-number="29" data-animal="虎"></div>
+                <div class="row"><span class="red">30牛</span><input type="text" class="amount-input" data-number="30" data-animal="牛"></div>
+                <div class="row"><span class="blue">31鼠</span><input type="text" class="amount-input" data-number="31" data-animal="鼠"></div>
+                <div class="row"><span class="green">32猪</span><input type="text" class="amount-input" data-number="32" data-animal="猪"></div>
+                <div class="row"><span class="green">33狗</span><input type="text" class="amount-input" data-number="33" data-animal="狗"></div>
+                <div class="row"><span class="red">34鸡</span><input type="text" class="amount-input" data-number="34" data-animal="鸡"></div>
+                <div class="row"><span class="red">35猴</span><input type="text" class="amount-input" data-number="35" data-animal="猴"></div>
+                <div class="row"><span class="blue">36羊</span><input type="text" class="amount-input" data-number="36" data-animal="羊"></div>
+            </div>
+            <!-- 第四列 37~49 -->
+            <div class="col">
+                <div class="row"><span class="blue">37马</span><input type="text" class="amount-input" data-number="37" data-animal="马"></div>
+                <div class="row"><span class="green">38蛇</span><input type="text" class="amount-input" data-number="38" data-animal="蛇"></div>
+                <div class="row"><span class="green">39龙</span><input type="text" class="amount-input" data-number="39" data-animal="龙"></div>
+                <div class="row"><span class="red">40兔</span><input type="text" class="amount-input" data-number="40" data-animal="兔"></div>
+                <div class="row"><span class="blue">41虎</span><input type="text" class="amount-input" data-number="41" data-animal="虎"></div>
+                <div class="row"><span class="blue">42牛</span><input type="text" class="amount-input" data-number="42" data-animal="牛"></div>
+                <div class="row"><span class="green">43鼠</span><input type="text" class="amount-input" data-number="43" data-animal="鼠"></div>
+                <div class="row"><span class="green">44猪</span><input type="text" class="amount-input" data-number="44" data-animal="猪"></div>
+                <div class="row"><span class="red">45狗</span><input type="text" class="amount-input" data-number="45" data-animal="狗"></div>
+                <div class="row"><span class="red">46鸡</span><input type="text" class="amount-input" data-number="46" data-animal="鸡"></div>
+                <div class="row"><span class="blue">47猴</span><input type="text" class="amount-input" data-number="47" data-animal="猴"></div>
+                <div class="row"><span class="blue">48羊</span><input type="text" class="amount-input" data-number="48" data-animal="羊"></div>
+                <div class="row"><span class="green">49马</span><input type="text" class="amount-input" data-number="49" data-animal="马"></div>
+            </div>
+        </div>
+
+        <!-- 汇总区域 -->
+        <div class="summary">
+            <div>散码总数: <span id="scatterTotal">0</span></div>
+            <div class="amount-item current-amount">本次上报金额：¥<span id="reportTotal">0</span></div>
+            <div class="amount-item accumulate-amount">累计上报金额：¥<span id="accumulateTotal">0</span></div>
+            <div class="data-code">2222新澳数据[A2BEF]</div>
+        </div>
+
+        <div style="margin-top:15px; padding-top:10px; border-top:1px solid #ccc;">
+            <button>散码汇总</button>
+            <button>包特汇总</button>
+            <button>平连码汇总</button>
+            <button>特平汇总</button>
+            <button>导出数据</button>
+        </div>
+    </div>
+
+    <!-- 汇总弹窗 -->
+    <div id="summaryModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📊 累计金额总览</h3>
+                <span class="close-btn" id="closeModalBtn">&times;</span>
+            </div>
+            
+            <div class="view-toggle">
+                <button id="viewNumbersBtn" class="view-btn active">📱 按号码查看</button>
+                <button id="viewAnimalsBtn" class="view-btn">🐾 按生肖查看</button>
+            </div>
+            
+            <div class="filter-bar">
+                <label>🔍 排序方式：
+                    <select id="sortSelect">
+                        <option value="number">按号码顺序 (1-49)</option>
+                        <option value="animalOrder">按生肖顺序</option>
+                        <option value="desc">金额从高到低</option>
+                        <option value="asc">金额从低到高</option>
+                    </select>
+                </label>
+                <button id="applyFilterBtn">应用排序</button>
+                <span style="margin-left:auto; font-size:1.2rem;">🏆 最高亮金 / 💎 最低亮蓝</span>
+            </div>
+            
+            <div id="numbersView" class="numbers-grid" style="display: block;">
+                <div class="grid-container" id="numbersGrid"></div>
+            </div>
+            
+            <div id="animalsView" class="animals-grid" style="display: none;">
+                <div class="grid-container" id="animalsGrid"></div>
+            </div>
+            
+            <div class="total-accum-bar">
+                累计总金额 <span id="modalAccumTotal">0.00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 生肖参照弹窗 -->
+    <div id="referenceModal" class="reference-modal">
+        <div class="reference-content">
+            <div class="reference-header">
+                <h3>📋 生肖参照表</h3>
+                <span class="reference-close" id="closeReferenceBtn">&times;</span>
+            </div>
+            <div class="reference-grid" id="referenceGrid"></div>
+        </div>
+    </div>
+
+    <!-- 波色参照弹窗 -->
+    <div id="waveModal" class="wave-modal">
+        <div class="wave-content">
+            <div class="wave-header">
+                <h3>🎨 波色参照表</h3>
+                <span class="wave-close" id="closeWaveBtn">&times;</span>
+            </div>
+            <div class="wave-grid" id="waveGrid"></div>
+        </div>
+    </div>
+
+    <!-- 保存投注弹窗 -->
+    <div id="saveModal" class="save-modal">
+        <div class="save-content">
+            <div class="save-header">
+                <h3>💾 保存投注记录</h3>
+                <span class="save-close" id="closeSaveBtn">&times;</span>
+            </div>
+            
+            <div class="save-info">
+                <div class="save-info-item">
+                    <span class="label">累计总金额：</span>
+                    <span class="value" id="saveAmount">¥0.00</span>
                 </div>
-                <div class="countdown-unit">
-                    <div class="countdown-value" id="countdownMinutes">00</div>
-                    <div class="countdown-label">分钟</div>
+                <div class="save-info-item">
+                    <span class="label">投注号码数：</span>
+                    <span class="value" id="saveNumbersCount">0</span>
                 </div>
-                <div class="countdown-unit">
-                    <div class="countdown-value" id="countdownSeconds">00</div>
-                    <div class="countdown-label">秒</div>
+                <div class="save-info-item">
+                    <span class="label">保存时间：</span>
+                    <span class="value" id="saveTime"></span>
                 </div>
             </div>
+            
+            <div class="save-input-area">
+                <label for="saveRemark">备注信息：</label>
+                <input type="text" id="saveRemark" placeholder="请输入备注（例如：张三的单子）">
+            </div>
+            
+            <div class="save-actions">
+                <button class="btn-cancel-save" id="cancelSaveBtn">取消</button>
+                <button class="btn-save" id="confirmSaveBtn">确认保存</button>
+            </div>
         </div>
-        
-        <div class="card">
-            <h2><i>📡</i> API数据查询</h2>
-            <div class="controls">
-                <button id="latestBtn"><i>🔍</i> 查询最新开奖</button>
-                <button id="liveBtn"><i>📺</i> 查询实时开奖</button>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <input type="number" id="yearInput" class="year-input" placeholder="输入年份" min="2020" max="2030" value="2025">
-                    <input type="number" id="countInput" class="count-input" placeholder="查询期数" min="1" max="100" value="10">
-                    <button id="historyBtn"><i>📚</i> 查询历史数据</button>
+    </div>
+
+    <!-- 投注记录列表弹窗 -->
+    <div id="historyModal" class="history-modal">
+        <div class="history-content">
+            <div class="history-header">
+                <h3>📋 投注记录列表</h3>
+                <span class="history-close" id="closeHistoryBtn">&times;</span>
+            </div>
+            
+            <div class="history-stats">
+                <div class="total-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">总投注金额</div>
+                        <div class="stat-value total" id="historyTotalAmount">0.00</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">投注次数</div>
+                        <div class="stat-value count" id="historyCount">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">平均金额</div>
+                        <div class="stat-value avg" id="historyAvgAmount">0.00</div>
+                    </div>
                 </div>
-                <button id="trendBtn"><i>📊</i> 走势图分析</button>
-                <button id="debugBtn"><i>🐛</i> 调试模式</button>
             </div>
             
-            <div id="loading" class="loading">
-                <div class="spinner"></div>
-                <p>正在查询数据，请稍候...</p>
+            <div class="history-list">
+                <div class="history-list-header">
+                    <div>保存时间</div>
+                    <div>总金额</div>
+                    <div>号码数量</div>
+                    <div>备注</div>
+                    <div>操作</div>
+                </div>
+                <div class="history-list-body" id="historyListBody">
+                    <!-- 动态生成保存记录 -->
+                </div>
             </div>
             
-            <div id="error" class="error">
-                <p id="errorMsg"></p>
-            </div>
-            
-            <div id="success" class="success">
-                <p id="successMsg"></p>
-            </div>
-            
-            <div id="debugInfo" class="debug-info">
-                <p id="debugMsg"></p>
-            </div>
-            
-            <div id="resultContainer" class="result-container">
-                <!-- 结果将在这里显示 -->
+            <div class="history-actions">
+                <button class="btn-refresh" id="refreshHistoryBtn">🔄 刷新</button>
+                <button class="btn-export" id="exportHistoryBtn">📥 导出数据</button>
+                <button class="btn-clear-history" id="clearHistoryBtn">🗑️ 清除所有记录</button>
             </div>
         </div>
-        
-        <!-- 走势图分析区域 -->
-        <div class="card" id="trendAnalysis" style="display: none;">
-            <h2><i>📊</i> 走势图分析</h2>
-            <div class="trend-controls">
-                <input type="number" id="periodsInput" class="periods-input" placeholder="分析期数" min="10" max="500" value="100">
-                <button id="analyzeTrendBtn"><i>📈</i> 分析特码走势</button>
-                <button id="closeTrendBtn"><i>❌</i> 关闭分析</button>
+    </div>
+
+    <!-- 投注详情弹窗 -->
+    <div id="detailModal" class="detail-modal">
+        <div class="detail-content">
+            <div class="detail-header">
+                <h4 id="detailTitle">投注详情</h4>
+                <span class="detail-close" id="closeDetailBtn">&times;</span>
+            </div>
+            <div class="detail-info" id="detailInfo">
+                <!-- 动态生成详情信息 -->
+            </div>
+            <div class="detail-numbers-grid" id="detailNumbers">
+                <!-- 动态生成号码详情 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认清空弹窗 -->
+    <div id="confirmModal" class="confirm-modal">
+        <div class="confirm-content">
+            <h4>⚠️ 确认清空</h4>
+            <p id="confirmMessage">确定要清除所有投注记录吗？此操作不可恢复！</p>
+            <div class="confirm-buttons">
+                <button class="btn-confirm-yes" id="confirmYesBtn">确认清除</button>
+                <button class="btn-confirm-no" id="confirmNoBtn">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 识别弹窗 -->
+    <div id="recognizeModal" class="recognize-modal">
+        <div class="recognize-content">
+            <div class="recognize-header">
+                <h3>🔍 识别金额</h3>
+                <span class="recognize-close" id="closeRecognizeBtn">&times;</span>
             </div>
             
-            <div id="trendResults" class="trend-results">
-                <!-- 走势分析结果将在这里显示 -->
+            <div class="recognize-example">
+                <p><strong>📝 支持的格式：</strong></p>
+                <p>• 生肖格式：<code>虎马鼠羊兔牛各50</code> 或 <code>龙蛇猪各30</code> → 每个生肖的所有号码各50/30元</p>
+                <p>• 号码列表格式：<code>05 13 56 75 34 23 45 36各50</code> 或 <code>05-13-56-75-34-23-45-36个50</code></p>
+                <p>• 支持分隔符：点号(.)、减号(-)、中文句号(。)、斜杠(/)、空格</p>
+                <p>• 金额关键词：支持 <code>个</code> 或 <code>各</code></p>
+                <p>• 金额格式：支持数字或中文（一~十、二十、三十...一百）</p>
+                <p><strong>💡 示例（可写在同一行或用换行分隔）：</strong></p>
+                <p><code>虎马鼠羊兔牛各50</code></p>
+                <p><code>龙蛇猪各30</code></p>
             </div>
-        </div>
-        
-        <div class="card">
-            <h2><i>🐭</i> 生肖号码对照表</h2>
-            <div class="zodiac-grid" id="zodiacGrid">
-                <!-- 生肖数据将通过JavaScript填充 -->
+            
+            <div class="recognize-input-area">
+                <textarea id="recognizeText" placeholder="请输入要识别的文本，支持多种分隔符和中文金额，多个规则可用换行分隔..."></textarea>
             </div>
-        </div>
-        
-        <div class="card">
-            <h2><i>🌿</i> 五行号码对照表</h2>
-            <table class="element-table" id="elementTable">
-                <thead>
-                    <tr>
-                        <th>五行</th>
-                        <th>号码</th>
-                        <th>五行</th>
-                        <th>号码</th>
-                    </tr>
-                </thead>
-                <tbody id="elementTableBody">
-                    <!-- 五行数据将通过JavaScript填充 -->
-                </tbody>
-            </table>
-        </div>
-        
-         <!-- <div class="card">
-            <h2><i>ℹ️</i> 系统信息</h2>
-            <p><strong>最新开奖API：</strong> https://macaumarksix.com/api/macaujc2.com</p>
-            <p><strong>实时开奖API：</strong> https://macaumarksix.com/api/live2</p>
-            <p><strong>历史开奖API：</strong> https://history.macaumarksix.com/history/macaujc2/y/{year}</p>
-            <p><strong>数据来源：</strong> macaujc.com</p>
-            <p><strong>技术支持：</strong> service@macaujc.com</p>
-        </div> -->
-        
-        <div class="footer">
-            <p>© 2025 罗老师666系统 - 本系统仅用爱导管人士使用</p>
+            
+            <div class="parse-result" id="parseResult">
+                解析成功！已填充到对应输入框。
+            </div>
+            
+            <div class="recognize-actions">
+                <button class="btn-cancel" id="cancelRecognizeBtn">取消</button>
+                <button class="btn-parse" id="parseBtn">开始识别</button>
+            </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const latestBtn = document.getElementById('latestBtn');
-            const liveBtn = document.getElementById('liveBtn');
+        (function() {
+            // 获取核心元素
+            const reportBtn = document.getElementById('reportBtn');
+            const clearOrderBtn = document.getElementById('clearOrderBtn');
+            const clearAllBtn = document.getElementById('clearAllBtn');
+            const reportTotal = document.getElementById('reportTotal');
+            const accumulateTotal = document.getElementById('accumulateTotal');
+            const orderTotal = document.getElementById('orderTotal');
+            const scatterTotal = document.getElementById('scatterTotal');
+            const amountInputs = document.querySelectorAll('.amount-input');
+            const referenceBtn = document.getElementById('referenceBtn');
+            const waveBtn = document.getElementById('waveBtn');
+            const referenceModal = document.getElementById('referenceModal');
+            const waveModal = document.getElementById('waveModal');
+            const closeReferenceBtn = document.getElementById('closeReferenceBtn');
+            const closeWaveBtn = document.getElementById('closeWaveBtn');
+            const referenceGrid = document.getElementById('referenceGrid');
+            const waveGrid = document.getElementById('waveGrid');
+
+            // 保存记录相关元素
+            const saveBtn = document.getElementById('saveBtn');
+            const saveModal = document.getElementById('saveModal');
+            const closeSaveBtn = document.getElementById('closeSaveBtn');
+            const cancelSaveBtn = document.getElementById('cancelSaveBtn');
+            const confirmSaveBtn = document.getElementById('confirmSaveBtn');
+            const saveAmount = document.getElementById('saveAmount');
+            const saveNumbersCount = document.getElementById('saveNumbersCount');
+            const saveTime = document.getElementById('saveTime');
+            const saveRemark = document.getElementById('saveRemark');
+
+            // 历史记录相关元素
             const historyBtn = document.getElementById('historyBtn');
-            const trendBtn = document.getElementById('trendBtn');
-            const debugBtn = document.getElementById('debugBtn');
-            const analyzeTrendBtn = document.getElementById('analyzeTrendBtn');
-            const closeTrendBtn = document.getElementById('closeTrendBtn');
-            const yearInput = document.getElementById('yearInput');
-            const countInput = document.getElementById('countInput');
-            const periodsInput = document.getElementById('periodsInput');
-            const loading = document.getElementById('loading');
-            const error = document.getElementById('error');
-            const success = document.getElementById('success');
-            const debugInfo = document.getElementById('debugInfo');
-            const resultContainer = document.getElementById('resultContainer');
-            const trendAnalysis = document.getElementById('trendAnalysis');
-            const trendResults = document.getElementById('trendResults');
-            const zodiacGrid = document.getElementById('zodiacGrid');
-            const errorMsg = document.getElementById('errorMsg');
-            const successMsg = document.getElementById('successMsg');
-            const debugMsg = document.getElementById('debugMsg');
-            const elementTableBody = document.getElementById('elementTableBody');
-            
-            // 倒计时元素
-            const currentPeriod = document.getElementById('currentPeriod');
-            const nextDrawTime = document.getElementById('nextDrawTime');
-            const countdownHours = document.getElementById('countdownHours');
-            const countdownMinutes = document.getElementById('countdownMinutes');
-            const countdownSeconds = document.getElementById('countdownSeconds');
-            
-            let debugMode = false;
-            let historyData = []; // 存储历史数据
-            
-            // 生肖号码对照数据
-            const zodiacNumbers = {
-                "鼠": [6, 18, 30, 42],
-                "牛": [5, 17, 29, 41],
-                "虎": [4, 16, 28, 40],
-                "兔": [3, 15, 27, 39],
-                "龙": [2, 14, 26, 38],
-                "蛇": [1, 13, 25, 37, 49],
-                "马": [12, 24, 36, 48],
-                "羊": [11, 23, 35, 47],
-                "猴": [10, 22, 34, 46],
-                "鸡": [9, 21, 33, 45],
-                "狗": [8, 20, 32, 44],
-                "猪": [7, 19, 31, 43]
+            const historyModal = document.getElementById('historyModal');
+            const closeHistoryBtn = document.getElementById('closeHistoryBtn');
+            const historyListBody = document.getElementById('historyListBody');
+            const historyTotalAmount = document.getElementById('historyTotalAmount');
+            const historyAvgAmount = document.getElementById('historyAvgAmount');
+            const historyCount = document.getElementById('historyCount');
+            const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+            const refreshHistoryBtn = document.getElementById('refreshHistoryBtn');
+            const exportHistoryBtn = document.getElementById('exportHistoryBtn');
+
+            // 详情弹窗
+            const detailModal = document.getElementById('detailModal');
+            const closeDetailBtn = document.getElementById('closeDetailBtn');
+            const detailTitle = document.getElementById('detailTitle');
+            const detailInfo = document.getElementById('detailInfo');
+            const detailNumbers = document.getElementById('detailNumbers');
+
+            // 识别相关元素
+            const recognizeBtn = document.getElementById('recognizeBtn');
+            const recognizeModal = document.getElementById('recognizeModal');
+            const closeRecognizeBtn = document.getElementById('closeRecognizeBtn');
+            const cancelRecognizeBtn = document.getElementById('cancelRecognizeBtn');
+            const parseBtn = document.getElementById('parseBtn');
+            const recognizeText = document.getElementById('recognizeText');
+            const parseResult = document.getElementById('parseResult');
+
+            // 确认弹窗
+            const confirmModal = document.getElementById('confirmModal');
+            const confirmYesBtn = document.getElementById('confirmYesBtn');
+            const confirmNoBtn = document.getElementById('confirmNoBtn');
+            const confirmMessage = document.getElementById('confirmMessage');
+
+            // 累计存储对象（用于本单汇总）
+            let numberAccum = {};
+            let accumulateAmount = 0;
+
+            // 保存记录存储 - 使用 localStorage
+            let savedRecords = [];
+
+            // 当前选中的记录ID（用于删除）
+            let currentDeleteId = null;
+
+            // 号码对应的生肖映射（从input的data-animal获取）
+            const numberToAnimal = {};
+            amountInputs.forEach(input => {
+                const num = input.dataset.number;
+                const animal = input.dataset.animal;
+                numberToAnimal[num] = animal;
+            });
+
+            // 根据新波色表更新每个号码的波色
+            const waveColors = {
+                // 红波：01-02-07-08-12-13-18-19-23-24-29-30-34-35-40-45-46
+                '01': 'red', '02': 'red', '07': 'red', '08': 'red', '12': 'red', '13': 'red', '18': 'red', '19': 'red',
+                '23': 'red', '24': 'red', '29': 'red', '30': 'red', '34': 'red', '35': 'red', '40': 'red', '45': 'red', '46': 'red',
+                // 蓝波：03-04-09-10-14-15-20-25-26-31-36-37-41-42-47-48
+                '03': 'blue', '04': 'blue', '09': 'blue', '10': 'blue', '14': 'blue', '15': 'blue', '20': 'blue', '25': 'blue',
+                '26': 'blue', '31': 'blue', '36': 'blue', '37': 'blue', '41': 'blue', '42': 'blue', '47': 'blue', '48': 'blue',
+                // 绿波：05-06-11-16-17-21-22-27-28-32-33-38-39-43-44-49
+                '05': 'green', '06': 'green', '11': 'green', '16': 'green', '17': 'green', '21': 'green', '22': 'green',
+                '27': 'green', '28': 'green', '32': 'green', '33': 'green', '38': 'green', '39': 'green', '43': 'green', '44': 'green', '49': 'green'
             };
-            
-            // 五行号码对照数据
-            const elementNumbers = {
-                "金": [3, 4, 11, 12, 25, 26, 33, 34, 41, 42],
-                "木": [7, 8, 15, 16, 23, 24, 37, 38, 45, 46],
-                "水": [13, 14, 21, 22, 29, 30, 43, 44],
-                "火": [1, 2, 9, 10, 17, 18, 31, 32, 39, 40, 47, 48],
-                "土": [5, 6, 19, 20, 27, 28, 35, 36, 49]
+
+            // 生肖对应的号码映射
+            const animalNumbers = {
+                '鼠': ['07', '19', '31', '43'],
+                '牛': ['06', '18', '30', '42'],
+                '虎': ['05', '17', '29', '41'],
+                '兔': ['04', '16', '28', '40'],
+                '龙': ['03', '15', '27', '39'],
+                '蛇': ['02', '14', '26', '38'],
+                '马': ['01', '13', '25', '37', '49'],
+                '羊': ['12', '24', '36', '48'],
+                '猴': ['11', '23', '35', '47'],
+                '鸡': ['10', '22', '34', '46'],
+                '狗': ['09', '21', '33', '45'],
+                '猪': ['08', '20', '32', '44']
             };
-            
-            // 初始化对照表
-            initZodiacGrid();
-            initElementTable();
-            
-            // 初始化倒计时
-            initCountdown();
-            
-            // 最新开奖按钮点击事件
-            latestBtn.addEventListener('click', function() {
-                fetchLatestResults();
-            });
-            
-            // 实时开奖按钮点击事件
-            liveBtn.addEventListener('click', function() {
-                fetchLiveResults();
-            });
-            
-            // 历史数据按钮点击事件
-            historyBtn.addEventListener('click', function() {
-                const year = yearInput.value;
-                const count = countInput.value;
-                
-                if (!year) {
-                    showError('请输入要查询的年份');
-                    return;
-                }
-                
-                if (!count || count < 1) {
-                    showError('请输入要查询的期数');
-                    return;
-                }
-                
-                fetchHistoryResults(year, count);
-            });
-            
-            // 走势图按钮点击事件
-            trendBtn.addEventListener('click', function() {
-                showTrendAnalysis();
-            });
-            
-            // 分析走势按钮点击事件
-            analyzeTrendBtn.addEventListener('click', function() {
-                const periods = periodsInput.value;
-                if (!periods || periods < 10) {
-                    showError('请输入至少10期的分析期数');
-                    return;
-                }
-                analyzeTrend(parseInt(periods));
-            });
-            
-            // 关闭走势分析按钮点击事件
-            closeTrendBtn.addEventListener('click', function() {
-                hideTrendAnalysis();
-            });
-            
-            // 调试按钮点击事件
-            debugBtn.addEventListener('click', function() {
-                debugMode = !debugMode;
-                debugBtn.style.background = debugMode ? 
-                    'linear-gradient(to right, #ff6b6b, #4ecdc4)' : 
-                    'linear-gradient(to right, #1a2a6c, #b21f1f)';
-                debugBtn.innerHTML = debugMode ? 
-                    '<i>🐛</i> 关闭调试' : 
-                    '<i>🐛</i> 调试模式';
-                showDebugInfo('调试模式 ' + (debugMode ? '已开启' : '已关闭'));
-            });
-            
-            // 初始化生肖网格布局
-            function initZodiacGrid() {
-                const zodiacs = Object.keys(zodiacNumbers);
-                
-                zodiacs.forEach(zodiac => {
-                    const column = document.createElement('div');
-                    column.className = 'zodiac-column';
-                    
-                    // 生肖标题
-                    const header = document.createElement('div');
-                    header.className = 'zodiac-header';
-                    header.textContent = `生肖${zodiac}`;
-                    column.appendChild(header);
-                    
-                    // 号码列表
-                    zodiacNumbers[zodiac].forEach(number => {
-                        const numberElement = document.createElement('div');
-                        numberElement.className = 'zodiac-number';
-                        numberElement.textContent = number.toString().padStart(2, '0');
-                        column.appendChild(numberElement);
-                    });
-                    
-                    zodiacGrid.appendChild(column);
-                });
-            }
-            
-            // 显示走势分析
-            function showTrendAnalysis() {
-                trendAnalysis.style.display = 'block';
-                resultContainer.style.display = 'none';
-                // 如果没有历史数据，先获取一些数据
-                if (historyData.length === 0) {
-                    fetchHistoryDataForTrend();
-                }
-            }
-            
-            // 隐藏走势分析
-            function hideTrendAnalysis() {
-                trendAnalysis.style.display = 'none';
-            }
-            
-            // 为走势分析获取历史数据
-            async function fetchHistoryDataForTrend() {
-                showLoading();
-                try {
-                    const currentYear = new Date().getFullYear();
-                    const apiUrl = `https://history.macaumarksix.com/history/macaujc2/y/${currentYear}`;
-                    
-                    const response = await fetch(apiUrl);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP错误! 状态: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    
-                    if (data && data.result && Array.isArray(data.data)) {
-                        historyData = data.data;
-                        showSuccess('历史数据加载完成，可以进行分析');
-                    } else {
-                        throw new Error('API返回的数据格式不正确');
-                    }
-                } catch (err) {
-                    console.error('获取历史数据失败:', err);
-                    showError('获取历史数据失败: ' + err.message);
-                } finally {
-                    hideLoading();
-                }
-            }
-            
-            // 分析走势
-            function analyzeTrend(periods) {
-                if (historyData.length === 0) {
-                    showError('没有可分析的历史数据，请先查询历史数据');
-                    return;
-                }
-                
-                showLoading();
-                
-                // 模拟分析过程
-                setTimeout(() => {
-                    // 限制分析期数
-                    const analysisData = historyData.slice(0, Math.min(periods, historyData.length));
-                    
-                    // 统计特码出现次数
-                    const specialCodeStats = analyzeSpecialCode(analysisData);
-                    
-                    // 统计特码波色出现次数
-                    const waveStats = analyzeWave(analysisData);
-                    
-                    // 统计特码生肖出现次数
-                    const zodiacStats = analyzeZodiac(analysisData);
-                    
-                    // 显示分析结果
-                    displayTrendResults(specialCodeStats, waveStats, zodiacStats, analysisData.length);
-                    
-                    hideLoading();
-                    showSuccess(`成功分析最近${analysisData.length}期特码走势`);
-                }, 1000);
-            }
-            
-            // 统计特码出现次数
-            function analyzeSpecialCode(data) {
-                const stats = {};
-                
-                data.forEach(item => {
-                    const numbers = item.openCode.split(',');
-                    const specialCode = parseInt(numbers[6]); // 第七个数字是特码
-                    
-                    if (!stats[specialCode]) {
-                        stats[specialCode] = 0;
-                    }
-                    stats[specialCode]++;
-                });
-                
-                // 转换为数组并排序
-                return Object.entries(stats)
-                    .map(([code, count]) => ({ code: parseInt(code), count }))
-                    .sort((a, b) => b.count - a.count);
-            }
-            
-            // 统计特码波色出现次数
-            function analyzeWave(data) {
-                const stats = {
-                    'red': 0,
-                    'blue': 0,
-                    'green': 0
+
+            // 根据animalNumbers生成animalData（用于汇总弹窗）
+            const animalData = {};
+            Object.entries(animalNumbers).forEach(([animal, numbers]) => {
+                animalData[animal] = {
+                    numbers: numbers,
+                    colors: numbers.map(num => waveColors[num] || 'black')
                 };
-                
-                data.forEach(item => {
-                    const waves = item.wave.split(',');
-                    const specialWave = waves[6]; // 第七个波色是特码波色
-                    
-                    if (stats[specialWave] !== undefined) {
-                        stats[specialWave]++;
-                    }
-                });
-                
-                // 转换为数组并排序
-                return Object.entries(stats)
-                    .map(([wave, count]) => ({ wave, count }))
-                    .sort((a, b) => b.count - a.count);
-            }
-            
-            // 统计特码生肖出现次数
-            function analyzeZodiac(data) {
-                const stats = {};
-                
-                data.forEach(item => {
-                    const zodiacs = item.zodiac.split(',');
-                    const specialZodiac = zodiacs[6]; // 第七个生肖是特码生肖
-                    
-                    if (!stats[specialZodiac]) {
-                        stats[specialZodiac] = 0;
-                    }
-                    stats[specialZodiac]++;
-                });
-                
-                // 转换为数组并排序
-                return Object.entries(stats)
-                    .map(([zodiac, count]) => ({ zodiac, count }))
-                    .sort((a, b) => b.count - a.count);
-            }
-            
-            // 显示走势分析结果
-            function displayTrendResults(specialCodeStats, waveStats, zodiacStats, totalPeriods) {
-                trendResults.innerHTML = '';
-                
-                // 特码出现次数
-                const specialCodeSection = document.createElement('div');
-                specialCodeSection.className = 'trend-section';
-                specialCodeSection.innerHTML = `
-                    <h3>特码出现次数 (共${totalPeriods}期)</h3>
-                    ${specialCodeStats.map(item => `
-                        <div class="trend-item">
-                            <div class="trend-name">
-                                <div class="number" style="background-color: #1a2a6c; width: 40px; height: 40px; font-size: 1rem;">
-                                    ${item.code}
-                                </div>
-                                <span>号码 ${item.code}</span>
-                            </div>
-                            <div class="trend-bar">
-                                <div class="trend-bar-fill" style="width: ${(item.count / totalPeriods) * 100}%"></div>
-                            </div>
-                            <div class="trend-count">${item.count}次</div>
-                        </div>
-                    `).join('')}
-                `;
-                trendResults.appendChild(specialCodeSection);
-                
-                // 特码波色出现次数
-                const waveSection = document.createElement('div');
-                waveSection.className = 'trend-section';
-                waveSection.innerHTML = `
-                    <h3>特码波色出现次数</h3>
-                    ${waveStats.map(item => {
-                        let bgColor = '#1a2a6c';
-                        if (item.wave === 'red') bgColor = '#b21f1f';
-                        else if (item.wave === 'green') bgColor = '#2a6c2a';
-                        
-                        return `
-                            <div class="trend-item">
-                                <div class="trend-name">
-                                    <div class="wave-item" style="background-color: ${bgColor}">${item.wave}</div>
-                                    <span>${item.wave}波</span>
-                                </div>
-                                <div class="trend-bar">
-                                    <div class="trend-bar-fill" style="width: ${(item.count / totalPeriods) * 100}%"></div>
-                                </div>
-                                <div class="trend-count">${item.count}次</div>
-                            </div>
-                        `;
-                    }).join('')}
-                `;
-                trendResults.appendChild(waveSection);
-                
-                // 特码生肖出现次数
-                const zodiacSection = document.createElement('div');
-                zodiacSection.className = 'trend-section';
-                zodiacSection.innerHTML = `
-                    <h3>特码生肖出现次数</h3>
-                    ${zodiacStats.map(item => `
-                        <div class="trend-item">
-                            <div class="trend-name">
-                                <div class="zodiac-item">${item.zodiac}</div>
-                                <span>生肖${item.zodiac}</span>
-                            </div>
-                            <div class="trend-bar">
-                                <div class="trend-bar-fill" style="width: ${(item.count / totalPeriods) * 100}%"></div>
-                            </div>
-                            <div class="trend-count">${item.count}次</div>
-                        </div>
-                    `).join('')}
-                `;
-                trendResults.appendChild(zodiacSection);
-            }
-            
-            // 初始化倒计时
-            function initCountdown() {
-                updateCountdown();
-                // 每秒更新一次倒计时
-                setInterval(updateCountdown, 1000);
-            }
-            
-            // 更新倒计时
-            function updateCountdown() {
+            });
+
+            const animalOrder = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'];
+
+            // 获取当前本地日期时间
+            function getCurrentDateTime() {
                 const now = new Date();
-                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                
-                // 设置开奖时间为北京时间21:34
-                const drawTime = new Date(today);
-                drawTime.setHours(21, 34, 0, 0);
-                
-                // 如果今天已经过了开奖时间，则计算明天的开奖时间
-                if (now > drawTime) {
-                    drawTime.setDate(drawTime.getDate() + 1);
-                }
-                
-                // 计算时间差（毫秒）
-                const diff = drawTime - now;
-                
-                // 计算小时、分钟、秒
-                const hours = Math.floor(diff / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
-                // 更新倒计时显示
-                countdownHours.textContent = hours.toString().padStart(2, '0');
-                countdownMinutes.textContent = minutes.toString().padStart(2, '0');
-                countdownSeconds.textContent = seconds.toString().padStart(2, '0');
-                
-                // 更新下一期开奖时间显示
-                const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-                const weekday = weekdays[drawTime.getDay()];
-                nextDrawTime.textContent = `${drawTime.getFullYear()}-${(drawTime.getMonth()+1).toString().padStart(2, '0')}-${drawTime.getDate().toString().padStart(2, '0')} 21:34:00 ${weekday}`;
-                
-                // 更新当前期号（基于日期计算）
-                const year = drawTime.getFullYear();
-                const startOfYear = new Date(year, 0, 1);
-                const dayOfYear = Math.floor((drawTime - startOfYear) / (1000 * 60 * 60 * 24)) + 1;
-                const period = `${year}${dayOfYear.toString().padStart(3, '0')}`;
-                currentPeriod.textContent = `第 ${period} 期`;
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
             }
-            
-            // 初始化五行对照表
-            function initElementTable() {
-                const elements = Object.keys(elementNumbers);
-                const half = Math.ceil(elements.length / 2);
+
+            // 实时计算本单汇总
+            amountInputs.forEach(input => {
+                input.addEventListener('input', calculateOrderTotal);
+            });
+
+            function calculateOrderTotal() {
+                let total = 0;
+                amountInputs.forEach(input => {
+                    const value = parseFloat(input.value) || 0;
+                    total += value;
+                });
+                orderTotal.textContent = total.toFixed(2);
+                scatterTotal.textContent = total.toFixed(2);
+            }
+
+            // 获取当前累计的投注明细
+            function getCurrentAccumDetails() {
+                const details = {};
+                let totalAmount = 0;
+                let numbersCount = 0;
                 
-                for (let i = 0; i < half; i++) {
-                    const row = document.createElement('tr');
-                    
-                    // 第一列五行
-                    const element1 = elements[i];
-                    const cell1 = document.createElement('td');
-                    cell1.innerHTML = `<span class="element-color-${getElementClass(element1)}">${element1}</span>`;
-                    row.appendChild(cell1);
-                    
-                    const numbers1 = document.createElement('td');
-                    numbers1.textContent = elementNumbers[element1].join(', ');
-                    row.appendChild(numbers1);
-                    
-                    // 第二列五行（如果存在）
-                    if (i + half < elements.length) {
-                        const element2 = elements[i + half];
-                        const cell2 = document.createElement('td');
-                        cell2.innerHTML = `<span class="element-color-${getElementClass(element2)}">${element2}</span>`;
-                        row.appendChild(cell2);
-                        
-                        const numbers2 = document.createElement('td');
-                        numbers2.textContent = elementNumbers[element2].join(', ');
-                        row.appendChild(numbers2);
-                    } else {
-                        // 如果第二列不存在，添加空单元格
-                        row.appendChild(document.createElement('td'));
-                        row.appendChild(document.createElement('td'));
+                Object.entries(numberAccum).forEach(([num, amount]) => {
+                    if (amount > 0) {
+                        details[num] = amount;
+                        totalAmount += amount;
+                        numbersCount++;
                     }
-                    
-                    elementTableBody.appendChild(row);
-                }
-            }
-            
-            // 获取五行对应的CSS类名
-            function getElementClass(element) {
-                const elementMap = {
-                    '金': 'gold',
-                    '木': 'wood',
-                    '水': 'water',
-                    '火': 'fire',
-                    '土': 'earth'
-                };
-                return elementMap[element] || 'earth';
-            }
-            
-            // 根据号码获取生肖
-            function getZodiacByNumber(number) {
-                for (const [zodiac, numbers] of Object.entries(zodiacNumbers)) {
-                    if (numbers.includes(parseInt(number))) {
-                        return zodiac;
-                    }
-                }
-                return '未知';
-            }
-            
-            // 根据号码获取五行
-            function getElementByNumber(number) {
-                for (const [element, numbers] of Object.entries(elementNumbers)) {
-                    if (numbers.includes(parseInt(number))) {
-                        return element;
-                    }
-                }
-                return '未知';
-            }
-            
-            // 获取最新开奖结果
-            async function fetchLatestResults() {
-                showLoading();
-                hideMessages();
-                disableButtons(true);
+                });
                 
-                try {
-                    const apiUrl = 'https://macaumarksix.com/api/macaujc2.com';
-                    showDebugInfo(`正在调用最新开奖API: ${apiUrl}`);
-                    
-                    const response = await fetch(apiUrl);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP错误! 状态: ${response.status}`);
+                return { details, totalAmount, numbersCount };
+            }
+
+            // 清空累计数据
+            function clearAccumulatedData() {
+                numberAccum = {};
+                accumulateAmount = 0;
+                reportTotal.textContent = '0.00';
+                accumulateTotal.textContent = '0.00';
+            }
+
+            // 加载保存记录
+            function loadSavedRecords() {
+                const saved = localStorage.getItem('savedRecords');
+                if (saved) {
+                    try {
+                        savedRecords = JSON.parse(saved);
+                    } catch (e) {
+                        savedRecords = [];
                     }
-                    
-                    const data = await response.json();
-                    showDebugInfo(`API返回数据: ${JSON.stringify(data, null, 2)}`);
-                    
-                    if (data && Array.isArray(data) && data.length > 0) {
-                        displayResults(data, '最新开奖结果');
-                        showSuccess('成功获取最新开奖结果');
-                    } else {
-                        throw new Error('API返回的数据格式不正确');
-                    }
-                } catch (err) {
-                    console.error('获取最新开奖结果失败:', err);
-                    showError('获取最新开奖结果失败: ' + err.message);
-                } finally {
-                    hideLoading();
-                    disableButtons(false);
+                } else {
+                    savedRecords = [];
+                    saveRecords();
                 }
             }
-            
-            // 获取实时开奖结果
-            async function fetchLiveResults() {
-                showLoading();
-                hideMessages();
-                disableButtons(true);
+
+            // 保存记录到localStorage
+            function saveRecords() {
+                localStorage.setItem('savedRecords', JSON.stringify(savedRecords));
+            }
+
+            // 渲染保存记录列表
+            function renderHistoryList() {
+                // 按时间倒序排序
+                const sortedRecords = [...savedRecords].sort((a, b) => 
+                    new Date(b.time) - new Date(a.time)
+                );
                 
-                try {
-                    const apiUrl = 'https://macaumarksix.com/api/live2';
-                    showDebugInfo(`正在调用实时开奖API: ${apiUrl}`);
-                    
-                    const response = await fetch(apiUrl);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP错误! 状态: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    showDebugInfo(`API返回数据: ${JSON.stringify(data, null, 2)}`);
-                    
-                    if (data && Array.isArray(data) && data.length > 0) {
-                        displayResults(data, '实时开奖结果');
-                        showSuccess('成功获取实时开奖结果');
-                    } else {
-                        throw new Error('API返回的数据格式不正确');
-                    }
-                } catch (err) {
-                    console.error('获取实时开奖结果失败:', err);
-                    showError('获取实时开奖结果失败: ' + err.message);
-                } finally {
-                    hideLoading();
-                    disableButtons(false);
-                }
-            }
-            
-            // 获取历史开奖结果
-            async function fetchHistoryResults(year, count) {
-                showLoading();
-                hideMessages();
-                disableButtons(true);
+                let html = '';
+                let totalAmount = 0;
                 
-                try {
-                    const apiUrl = `https://history.macaumarksix.com/history/macaujc2/y/${year}`;
-                    showDebugInfo(`正在调用历史开奖API: ${apiUrl}`);
-                    showDebugInfo(`请求参数: 年份=${year}, 期数=${count}`);
+                sortedRecords.forEach(record => {
+                    totalAmount += record.totalAmount;
+                    const numbersCount = Object.keys(record.details).length;
                     
-                    const response = await fetch(apiUrl);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP错误! 状态: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    showDebugInfo(`API返回原始数据: ${JSON.stringify(data, null, 2)}`);
-                    
-                    if (data && data.result && Array.isArray(data.data)) {
-                        // 存储历史数据用于走势分析
-                        historyData = data.data;
-                        
-                        // 调试：显示所有期号
-                        const allExpects = data.data.map(item => item.expect);
-                        showDebugInfo(`所有期号: ${allExpects.join(', ')}`);
-                        showDebugInfo(`总数据条数: ${data.data.length}`);
-                        
-                        // 去重处理：基于期号去重
-                        const uniqueData = [];
-                        const seenExpects = new Set();
-                        
-                        for (const item of data.data) {
-                            if (!seenExpects.has(item.expect)) {
-                                seenExpects.add(item.expect);
-                                uniqueData.push(item);
-                            }
-                        }
-                        
-                        showDebugInfo(`去重后期号: ${uniqueData.map(item => item.expect).join(', ')}`);
-                        showDebugInfo(`去重后数据条数: ${uniqueData.length}`);
-                        
-                        // 按期号倒序排列并限制数量
-                        const sortedData = uniqueData.sort((a, b) => {
-                            return parseInt(b.expect) - parseInt(a.expect);
-                        });
-                        
-                        const limitedData = sortedData.slice(0, count);
-                        showDebugInfo(`最终显示期号: ${limitedData.map(item => item.expect).join(', ')}`);
-                        
-                        if (limitedData.length > 0) {
-                            displayResults(limitedData, `${year}年历史开奖结果（最近${count}期）`);
-                            showSuccess(`成功获取${year}年最近${count}期历史开奖结果`);
-                        } else {
-                            throw new Error('没有找到符合条件的历史数据');
-                        }
-                    } else {
-                        throw new Error('API返回的数据格式不正确');
-                    }
-                } catch (err) {
-                    console.error('获取历史开奖结果失败:', err);
-                    showError('获取历史开奖结果失败: ' + err.message);
-                } finally {
-                    hideLoading();
-                    disableButtons(false);
-                }
-            }
-            
-            // 禁用/启用按钮
-            function disableButtons(disabled) {
-                latestBtn.disabled = disabled;
-                liveBtn.disabled = disabled;
-                historyBtn.disabled = disabled;
-                trendBtn.disabled = disabled;
-                debugBtn.disabled = disabled;
-                analyzeTrendBtn.disabled = disabled;
-            }
-            
-            // 显示调试信息
-            function showDebugInfo(message) {
-                if (debugMode) {
-                    debugMsg.textContent = message;
-                    debugInfo.style.display = 'block';
-                }
-            }
-            
-            // 显示加载动画
-            function showLoading() {
-                loading.style.display = 'block';
-                resultContainer.style.display = 'none';
-            }
-            
-            // 隐藏加载动画
-            function hideLoading() {
-                loading.style.display = 'none';
-            }
-            
-            // 显示错误信息
-            function showError(message) {
-                errorMsg.textContent = message;
-                error.style.display = 'block';
-                success.style.display = 'none';
-            }
-            
-            // 显示成功信息
-            function showSuccess(message) {
-                successMsg.textContent = message;
-                success.style.display = 'block';
-                error.style.display = 'none';
-            }
-            
-            // 隐藏所有消息
-            function hideMessages() {
-                error.style.display = 'none';
-                success.style.display = 'none';
-                if (!debugMode) {
-                    debugInfo.style.display = 'none';
-                }
-            }
-            
-            // 显示结果
-            function displayResults(data, title) {
-                resultContainer.innerHTML = `<h3>${title}</h3>`;
-                
-                if (!data || data.length === 0) {
-                    resultContainer.innerHTML += '<p>没有找到相关数据</p>';
-                    resultContainer.style.display = 'block';
-                    return;
-                }
-                
-                // 显示数据统计
-                showDebugInfo(`准备显示 ${data.length} 条数据`);
-                
-                data.forEach((item, index) => {
-                    const numbers = item.openCode.split(',');
-                    const waves = item.wave.split(',');
-                    const zodiacs = item.zodiac.split(',');
-                    
-                    const resultItem = document.createElement('div');
-                    resultItem.className = 'result-item';
-                    
-                    resultItem.innerHTML = `
-                        <div class="result-header">
-                            <div class="expect">第 ${item.expect} 期</div>
-                            <div class="open-time">开奖时间: ${item.openTime}</div>
-                        </div>
-                        <div class="numbers">
-                            ${numbers.map((num, index) => {
-                                const numInt = parseInt(num);
-                                let bgColor = '#1a2a6c'; // 默认蓝色
-                                
-                                // 根据波色设置背景颜色
-                                if (index < waves.length) {
-                                    if (waves[index] === 'red') bgColor = '#b21f1f';
-                                    else if (waves[index] === 'green') bgColor = '#2a6c2a';
-                                }
-                                
-                                const zodiac = getZodiacByNumber(num);
-                                const element = getElementByNumber(num);
-                                
-                                return `
-                                    <div class="number" style="background-color: ${bgColor}">
-                                        <div>${num}</div>
-                                        <div class="number-zodiac">${zodiac}</div>
-                                        <div class="number-element">${element}</div>
-                                    </div>
-                                `;
-                            }).join('')}
-                        </div>
-                        <div class="wave">
-                            ${waves.map(wave => {
-                                let bgColor = '#1a2a6c'; // 默认蓝色
-                                if (wave === 'red') bgColor = '#b21f1f';
-                                else if (wave === 'green') bgColor = '#2a6c2a';
-                                
-                                return `<div class="wave-item" style="background-color: ${bgColor}">${wave}</div>`;
-                            }).join('')}
-                        </div>
-                        <div class="zodiac">
-                            ${zodiacs.map(zodiac => `<div class="zodiac-item">${zodiac}</div>`).join('')}
-                        </div>
-                        <div style="margin-top: 15px; font-size: 0.9rem; color: #666;">
-                            验证状态: ${item.verify ? '已验证' : '未验证'} | 类型: ${item.type}
+                    html += `
+                        <div class="history-item" onclick="window.showRecordDetail('${record.id}')">
+                            <div class="date">${record.time}</div>
+                            <div class="amount">¥ ${record.totalAmount.toFixed(2)}</div>
+                            <div class="numbers-count">${numbersCount} 个号码</div>
+                            <div class="remark">${record.remark || '无备注'}</div>
+                            <div class="delete" onclick="event.stopPropagation(); window.confirmDeleteRecord('${record.id}')">删除</div>
                         </div>
                     `;
-                    
-                    resultContainer.appendChild(resultItem);
                 });
                 
-                resultContainer.style.display = 'block';
+                historyListBody.innerHTML = html || '<div style="text-align:center; padding:20px; color:#7f8c8d;">暂无投注记录</div>';
+                
+                // 更新统计
+                const count = savedRecords.length;
+                historyTotalAmount.textContent = totalAmount.toFixed(2);
+                historyCount.textContent = count;
+                historyAvgAmount.textContent = count > 0 ? (totalAmount / count).toFixed(2) : '0.00';
             }
-        });
+
+            // 显示记录详情
+            window.showRecordDetail = function(id) {
+                const record = savedRecords.find(r => r.id === id);
+                if (!record) return;
+                
+                detailTitle.textContent = `投注详情 - ${record.remark || '无备注'}`;
+                
+                // 详情信息
+                const numbersCount = Object.keys(record.details).length;
+                detailInfo.innerHTML = `
+                    <div><strong>保存时间：</strong> ${record.time}</div>
+                    <div><strong>总金额：</strong> ¥${record.totalAmount.toFixed(2)}</div>
+                    <div><strong>号码数量：</strong> ${numbersCount} 个</div>
+                    <div><strong>备注：</strong> ${record.remark || '无备注'}</div>
+                `;
+                
+                // 号码详情 - 显示号码、生肖和金额
+                let numbersHtml = '';
+                const sortedNumbers = Object.keys(record.details).sort((a, b) => parseInt(a) - parseInt(b));
+                sortedNumbers.forEach(num => {
+                    const amount = record.details[num];
+                    const color = waveColors[num] || 'black';
+                    const animal = numberToAnimal[num] || '';
+                    numbersHtml += `
+                        <div class="detail-number-item ${color}">
+                            <div class="num">${num}</div>
+                            <div class="animal">${animal}</div>
+                            <div class="val">¥${amount.toFixed(2)}</div>
+                        </div>
+                    `;
+                });
+                
+                detailNumbers.innerHTML = numbersHtml;
+                detailModal.style.display = 'flex';
+            };
+
+            // 确认删除记录
+            window.confirmDeleteRecord = function(id) {
+                currentDeleteId = id;
+                confirmMessage.textContent = '确定要删除这条投注记录吗？此操作不可恢复！';
+                confirmModal.style.display = 'flex';
+            };
+
+            // 执行删除
+            function deleteRecord(id) {
+                savedRecords = savedRecords.filter(r => r.id !== id);
+                saveRecords();
+                renderHistoryList();
+                confirmModal.style.display = 'none';
+            }
+
+            // 清除所有记录
+            function clearAllRecords() {
+                savedRecords = [];
+                saveRecords();
+                renderHistoryList();
+                confirmModal.style.display = 'none';
+            }
+
+            // 打开保存记录弹窗
+            saveBtn.addEventListener('click', () => {
+                const { details, totalAmount, numbersCount } = getCurrentAccumDetails();
+                
+                if (totalAmount <= 0) {
+                    alert('当前累计金额为0，无需保存');
+                    return;
+                }
+                
+                saveAmount.textContent = `¥${totalAmount.toFixed(2)}`;
+                saveNumbersCount.textContent = numbersCount;
+                saveTime.textContent = getCurrentDateTime();
+                saveRemark.value = '';
+                saveModal.style.display = 'flex';
+            });
+
+            // 关闭保存记录弹窗
+            function closeSaveModal() {
+                saveModal.style.display = 'none';
+            }
+
+            closeSaveBtn.addEventListener('click', closeSaveModal);
+            cancelSaveBtn.addEventListener('click', closeSaveModal);
+
+            // 确认保存
+            confirmSaveBtn.addEventListener('click', () => {
+                const { details, totalAmount, numbersCount } = getCurrentAccumDetails();
+                
+                if (totalAmount <= 0) {
+                    alert('当前累计金额为0，无需保存');
+                    closeSaveModal();
+                    return;
+                }
+                
+                // 创建新记录
+                const newRecord = {
+                    id: Date.now().toString(),
+                    time: getCurrentDateTime(),
+                    totalAmount: totalAmount,
+                    details: { ...details }, // 保存完整的投注明细
+                    remark: saveRemark.value.trim() || '无备注'
+                };
+                
+                savedRecords.push(newRecord);
+                saveRecords();
+                
+                // 清空累计数据
+                clearAccumulatedData();
+                
+                closeSaveModal();
+                alert(`✅ 保存成功！总金额 ¥${totalAmount.toFixed(2)}，共 ${numbersCount} 个号码已保存到记录中，累计数据已清空。`);
+            });
+
+            // 打开历史记录弹窗
+            historyBtn.addEventListener('click', () => {
+                renderHistoryList();
+                historyModal.style.display = 'flex';
+            });
+
+            // 关闭历史记录弹窗
+            closeHistoryBtn.addEventListener('click', () => {
+                historyModal.style.display = 'none';
+            });
+
+            // 关闭详情弹窗
+            closeDetailBtn.addEventListener('click', () => {
+                detailModal.style.display = 'none';
+            });
+
+            // 刷新历史记录
+            refreshHistoryBtn.addEventListener('click', () => {
+                renderHistoryList();
+            });
+
+            // 导出数据
+            exportHistoryBtn.addEventListener('click', () => {
+                const dataStr = JSON.stringify(savedRecords, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `bet_records_${getCurrentDateTime().split(' ')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+
+            // 清除所有记录按钮
+            clearHistoryBtn.addEventListener('click', () => {
+                if (savedRecords.length === 0) {
+                    alert('暂无保存记录');
+                    return;
+                }
+                confirmMessage.textContent = '确定要清除所有投注记录吗？此操作不可恢复！';
+                currentDeleteId = 'ALL';
+                confirmModal.style.display = 'flex';
+            });
+
+            // 确认弹窗按钮
+            confirmYesBtn.addEventListener('click', () => {
+                if (currentDeleteId === 'ALL') {
+                    clearAllRecords();
+                } else {
+                    deleteRecord(currentDeleteId);
+                }
+            });
+
+            confirmNoBtn.addEventListener('click', () => {
+                confirmModal.style.display = 'none';
+                currentDeleteId = null;
+            });
+
+            // 一键上报
+            reportBtn.addEventListener('click', function() {
+                calculateOrderTotal();
+                const currentAmount = parseFloat(orderTotal.textContent) || 0;
+                if (currentAmount <= 0) {
+                    alert('本次无有效金额，无需上报！');
+                    return;
+                }
+
+                // 更新累计金额
+                amountInputs.forEach(input => {
+                    const num = input.dataset.number;
+                    const val = parseFloat(input.value) || 0;
+                    if (val > 0) {
+                        if (!numberAccum[num]) numberAccum[num] = 0;
+                        numberAccum[num] += val;
+                    }
+                });
+
+                accumulateAmount = Object.values(numberAccum).reduce((sum, v) => sum + v, 0);
+                reportTotal.textContent = currentAmount.toFixed(2);
+                accumulateTotal.textContent = accumulateAmount.toFixed(2);
+
+                // 清空输入框
+                amountInputs.forEach(input => { input.value = ''; });
+                calculateOrderTotal();
+
+                alert(`✅ 一键上报成功！本次上报 ¥${currentAmount.toFixed(2)} 已累计。`);
+            });
+
+            // 清空本单汇总
+            clearOrderBtn.addEventListener('click', function() {
+                if (confirm('确定要清空本单所有输入的金额吗？')) {
+                    amountInputs.forEach(input => { input.value = ''; });
+                    calculateOrderTotal();
+                }
+            });
+
+            // 清空累计数据
+            clearAllBtn.addEventListener('click', function() {
+                if (confirm('确定要清空所有累计上报数据吗？本单输入的金额不会清空')) {
+                    numberAccum = {};
+                    accumulateAmount = 0;
+                    reportTotal.textContent = '0.00';
+                    accumulateTotal.textContent = '0.00';
+                    alert('累计上报数据已清空！');
+                }
+            });
+
+            // 初始化
+            calculateOrderTotal();
+            reportTotal.textContent = '0.00';
+            accumulateTotal.textContent = '0.00';
+            loadSavedRecords();
+
+            // 生肖参照弹窗
+            function renderReference() {
+                let html = '';
+                animalOrder.forEach(animal => {
+                    const data = animalData[animal];
+                    html += `<div class="ref-item ${animal}">`;
+                    html += `<div class="ref-title">🐾 ${animal}</div>`;
+                    html += `<div class="ref-numbers">`;
+                    
+                    data.numbers.forEach((num, index) => {
+                        const color = data.colors[index];
+                        const colorClass = color === 'red' ? 'red' : (color === 'blue' ? 'blue' : 'green');
+                        html += `
+                            <div class="ref-number-row">
+                                <span class="ref-number-value ${colorClass}">${num}</span>
+                            </div>
+                        `;
+                    });
+                    
+                    html += `</div></div>`;
+                });
+                referenceGrid.innerHTML = html;
+            }
+
+            referenceBtn.addEventListener('click', () => {
+                renderReference();
+                referenceModal.style.display = 'flex';
+            });
+
+            closeReferenceBtn.addEventListener('click', () => {
+                referenceModal.style.display = 'none';
+            });
+
+            // 波色参照弹窗
+            function renderWave() {
+                const waveGroups = {
+                    'red': [],
+                    'blue': [],
+                    'green': []
+                };
+                
+                Object.entries(waveColors).forEach(([num, color]) => {
+                    waveGroups[color].push(num);
+                });
+
+                waveGroups.red.sort((a, b) => parseInt(a) - parseInt(b));
+                waveGroups.blue.sort((a, b) => parseInt(a) - parseInt(b));
+                waveGroups.green.sort((a, b) => parseInt(a) - parseInt(b));
+
+                let html = `
+                    <div class="wave-section red-section">
+                        <div class="wave-section-title red">🔴 红波</div>
+                        <div class="wave-numbers-grid">
+                `;
+                waveGroups.red.forEach(num => {
+                    html += `<div class="wave-number-item red">${num}</div>`;
+                });
+                html += `</div></div>`;
+
+                html += `
+                    <div class="wave-section blue-section">
+                        <div class="wave-section-title blue">🔵 蓝波</div>
+                        <div class="wave-numbers-grid">
+                `;
+                waveGroups.blue.forEach(num => {
+                    html += `<div class="wave-number-item blue">${num}</div>`;
+                });
+                html += `</div></div>`;
+
+                html += `
+                    <div class="wave-section green-section">
+                        <div class="wave-section-title green">🟢 绿波</div>
+                        <div class="wave-numbers-grid">
+                `;
+                waveGroups.green.forEach(num => {
+                    html += `<div class="wave-number-item green">${num}</div>`;
+                });
+                html += `</div></div>`;
+
+                waveGrid.innerHTML = html;
+            }
+
+            waveBtn.addEventListener('click', () => {
+                renderWave();
+                waveModal.style.display = 'flex';
+            });
+
+            closeWaveBtn.addEventListener('click', () => {
+                waveModal.style.display = 'none';
+            });
+
+            // 点击外部关闭弹窗
+            window.addEventListener('click', (e) => {
+                if (e.target === referenceModal) {
+                    referenceModal.style.display = 'none';
+                }
+                if (e.target === waveModal) {
+                    waveModal.style.display = 'none';
+                }
+                if (e.target === historyModal) {
+                    historyModal.style.display = 'none';
+                }
+                if (e.target === detailModal) {
+                    detailModal.style.display = 'none';
+                }
+                if (e.target === confirmModal) {
+                    confirmModal.style.display = 'none';
+                }
+                if (e.target === recognizeModal) {
+                    recognizeModal.style.display = 'none';
+                }
+                if (e.target === saveModal) {
+                    saveModal.style.display = 'none';
+                }
+            });
+
+            // 汇总弹窗相关
+            const summaryBtn = document.getElementById('summaryBtn');
+            const modal = document.getElementById('summaryModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const sortSelect = document.getElementById('sortSelect');
+            const applyFilterBtn = document.getElementById('applyFilterBtn');
+            const numbersView = document.getElementById('numbersView');
+            const animalsView = document.getElementById('animalsView');
+            const viewNumbersBtn = document.getElementById('viewNumbersBtn');
+            const viewAnimalsBtn = document.getElementById('viewAnimalsBtn');
+            const numbersGrid = document.getElementById('numbersGrid');
+            const animalsGrid = document.getElementById('animalsGrid');
+            const modalAccumTotal = document.getElementById('modalAccumTotal');
+
+            let currentView = 'numbers';
+
+            const allNumbers = [];
+            const numberSet = new Set();
+            amountInputs.forEach(input => {
+                const num = input.dataset.number;
+                if (!numberSet.has(num)) {
+                    numberSet.add(num);
+                    allNumbers.push({
+                        number: num,
+                        animal: input.dataset.animal
+                    });
+                }
+            });
+            allNumbers.sort((a, b) => parseInt(a.number) - parseInt(b.number));
+
+            function closeModal() {
+                modal.style.display = 'none';
+            }
+            closeModalBtn.addEventListener('click', closeModal);
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            viewNumbersBtn.addEventListener('click', () => {
+                viewNumbersBtn.classList.add('active');
+                viewAnimalsBtn.classList.remove('active');
+                numbersView.style.display = 'block';
+                animalsView.style.display = 'none';
+                currentView = 'numbers';
+                renderCurrentView();
+            });
+
+            viewAnimalsBtn.addEventListener('click', () => {
+                viewAnimalsBtn.classList.add('active');
+                viewNumbersBtn.classList.remove('active');
+                animalsView.style.display = 'block';
+                numbersView.style.display = 'none';
+                currentView = 'animals';
+                renderCurrentView();
+            });
+
+            // 计算生肖累计
+            function calculateAnimalTotals() {
+                const animalTotals = {};
+                animalOrder.forEach(animal => { animalTotals[animal] = 0; });
+
+                Object.entries(numberAccum).forEach(([number, amount]) => {
+                    for (const [animal, data] of Object.entries(animalData)) {
+                        if (data.numbers.includes(number)) {
+                            animalTotals[animal] += amount;
+                            break;
+                        }
+                    }
+                });
+                return animalTotals;
+            }
+
+            // 渲染当前视图
+            function renderCurrentView() {
+                if (currentView === 'numbers') {
+                    renderNumbersView();
+                } else {
+                    renderAnimalsView();
+                }
+            }
+
+            // 渲染号码视图
+            function renderNumbersView() {
+                const sortOrder = sortSelect.value;
+                
+                let items = allNumbers.map(item => ({
+                    number: item.number,
+                    animal: item.animal,
+                    amount: numberAccum[item.number] || 0
+                }));
+
+                if (sortOrder === 'desc') {
+                    items.sort((a, b) => b.amount - a.amount);
+                } else if (sortOrder === 'asc') {
+                    items.sort((a, b) => a.amount - b.amount);
+                } else if (sortOrder === 'animalOrder') {
+                    items.sort((a, b) => {
+                        if (a.animal === b.animal) {
+                            return parseInt(a.number) - parseInt(b.number);
+                        }
+                        return animalOrder.indexOf(a.animal) - animalOrder.indexOf(b.animal);
+                    });
+                } else {
+                    items.sort((a, b) => parseInt(a.number) - parseInt(b.number));
+                }
+
+                const amounts = items.map(i => i.amount).filter(v => v > 0);
+                const maxVal = amounts.length ? Math.max(...amounts) : -1;
+                const minVal = amounts.length ? Math.min(...amounts) : -1;
+
+                let html = '';
+                items.forEach(item => {
+                    const amount = item.amount;
+                    let highlightClass = '';
+                    if (amount > 0 && amount === maxVal && maxVal !== minVal) highlightClass = 'highlight-max';
+                    else if (amount > 0 && amount === minVal && maxVal !== minVal) highlightClass = 'highlight-min';
+                    
+                    html += `
+                        <div class="number-card ${highlightClass}">
+                            <div class="number-header">
+                                <span class="number-badge">${item.number}</span>
+                                <span class="animal-tag">${item.animal}</span>
+                            </div>
+                            <div class="amount-display">¥ ${amount.toFixed(2)}</div>
+                        </div>
+                    `;
+                });
+                numbersGrid.innerHTML = html;
+
+                const total = items.reduce((sum, i) => sum + i.amount, 0);
+                modalAccumTotal.textContent = total.toFixed(2);
+            }
+
+            // 渲染生肖视图
+            function renderAnimalsView() {
+                const sortOrder = sortSelect.value;
+                const animalTotals = calculateAnimalTotals();
+                
+                let animals = Object.entries(animalTotals).map(([animal, amount]) => ({
+                    animal,
+                    amount,
+                    numbers: animalData[animal].numbers
+                }));
+
+                if (sortOrder === 'desc') {
+                    animals.sort((a, b) => b.amount - a.amount);
+                } else if (sortOrder === 'asc') {
+                    animals.sort((a, b) => a.amount - b.amount);
+                } else {
+                    animals.sort((a, b) => animalOrder.indexOf(a.animal) - animalOrder.indexOf(b.animal));
+                }
+
+                const amounts = animals.map(a => a.amount).filter(v => v > 0);
+                const maxVal = amounts.length ? Math.max(...amounts) : -1;
+                const minVal = amounts.length ? Math.min(...amounts) : -1;
+
+                let html = '';
+                animals.forEach(item => {
+                    const amount = item.amount;
+                    let highlightClass = '';
+                    if (amount > 0 && amount === maxVal && maxVal !== minVal) highlightClass = 'highlight-max';
+                    else if (amount > 0 && amount === minVal && maxVal !== minVal) highlightClass = 'highlight-min';
+                    
+                    html += `
+                        <div class="animal-card ${highlightClass}">
+                            <div class="animal-icon">🐾</div>
+                            <div class="animal-name">${item.animal}</div>
+                            <div class="animal-amount">¥ ${amount.toFixed(2)}</div>
+                            <div class="animal-numbers">${item.numbers.join(' ')}</div>
+                        </div>
+                    `;
+                });
+                animalsGrid.innerHTML = html;
+
+                const total = animals.reduce((sum, i) => sum + i.amount, 0);
+                modalAccumTotal.textContent = total.toFixed(2);
+            }
+
+            summaryBtn.addEventListener('click', () => {
+                renderCurrentView();
+                modal.style.display = 'flex';
+            });
+
+            applyFilterBtn.addEventListener('click', renderCurrentView);
+
+            // 识别功能
+            // 中文数字转阿拉伯数字
+            function chineseToNumber(chinese) {
+                if (!isNaN(parseFloat(chinese))) {
+                    return parseFloat(chinese);
+                }
+                
+                const chineseNumbers = {
+                    '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9, '十': 10,
+                    '十一': 11, '十二': 12, '十三': 13, '十四': 14, '十五': 15, '十六': 16, '十七': 17, '十八': 18, '十九': 19,
+                    '二十': 20, '二十一': 21, '二十二': 22, '二十三': 23, '二十四': 24, '二十五': 25, '二十六': 26, '二十七': 27, '二十八': 28, '二十九': 29,
+                    '三十': 30, '三十一': 31, '三十二': 32, '三十三': 33, '三十四': 34, '三十五': 35, '三十六': 36, '三十七': 37, '三十八': 38, '三十九': 39,
+                    '四十': 40, '四十一': 41, '四十二': 42, '四十三': 43, '四十四': 44, '四十五': 45, '四十六': 46, '四十七': 47, '四十八': 48, '四十九': 49,
+                    '五十': 50, '五十一': 51, '五十二': 52, '五十三': 53, '五十四': 54, '五十五': 55, '五十六': 56, '五十七': 57, '五十八': 58, '五十九': 59,
+                    '六十': 60, '六十一': 61, '六十二': 62, '六十三': 63, '六十四': 64, '六十五': 65, '六十六': 66, '六十七': 67, '六十八': 68, '六十九': 69,
+                    '七十': 70, '七十一': 71, '七十二': 72, '七十三': 73, '七十四': 74, '七十五': 75, '七十六': 76, '七十七': 77, '七十八': 78, '七十九': 79,
+                    '八十': 80, '八十一': 81, '八十二': 82, '八十三': 83, '八十四': 84, '八十五': 85, '八十六': 86, '八十七': 87, '八十八': 88, '八十九': 89,
+                    '九十': 90, '九十一': 91, '九十二': 92, '九十三': 93, '九十四': 94, '九十五': 95, '九十六': 96, '九十七': 97, '九十八': 98, '九十九': 99,
+                    '一百': 100
+                };
+                
+                if (chineseNumbers[chinese] !== undefined) {
+                    return chineseNumbers[chinese];
+                }
+                
+                return NaN;
+            }
+
+            // 验证是否是有效的号码
+            function isValidNumber(num) {
+                if (!/^\d{1,2}$/.test(num)) return false;
+                const numInt = parseInt(num, 10);
+                return numInt >= 1 && numInt <= 49;
+            }
+
+            // 格式化号码为两位数字符串
+            function formatNumber(num) {
+                const numInt = parseInt(num, 10);
+                return numInt < 10 ? '0' + numInt : numInt.toString();
+            }
+
+            // 解析一行文本
+            function parseLine(line) {
+                const results = {};
+                
+                const match = line.match(/(.+?)(?:个|各)(.+)/);
+                if (!match) return results;
+                
+                const leftPart = match[1].trim();
+                const amountStr = match[2].trim();
+                
+                let amount = parseFloat(amountStr);
+                if (isNaN(amount)) {
+                    amount = chineseToNumber(amountStr);
+                }
+                
+                if (isNaN(amount) || amount <= 0) return results;
+                
+                const animalPattern = /^[鼠牛虎兔龙蛇马羊猴鸡狗猪]+$/;
+                
+                if (animalPattern.test(leftPart)) {
+                    const animals = leftPart.split('');
+                    animals.forEach(animal => {
+                        const numbers = animalNumbers[animal];
+                        if (numbers) {
+                            numbers.forEach(num => {
+                                if (!results[num]) results[num] = 0;
+                                results[num] += amount;
+                            });
+                        }
+                    });
+                } else {
+                    let normalized = leftPart
+                        .replace(/[.\-。\/\s]+/g, ' ')
+                        .trim();
+                    
+                    if (!normalized) return results;
+                    
+                    const numberList = normalized.split(/\s+/);
+                    
+                    numberList.forEach(numStr => {
+                        let num = numStr.trim();
+                        if (!num) return;
+                        
+                        if (isValidNumber(num)) {
+                            const formattedNum = formatNumber(num);
+                            if (!results[formattedNum]) results[formattedNum] = 0;
+                            results[formattedNum] += amount;
+                        }
+                    });
+                }
+                
+                return results;
+            }
+
+            // 解析文本
+            function parseText(text) {
+                const results = {};
+                
+                const lines = text.split('\n');
+                
+                lines.forEach(line => {
+                    line = line.trim();
+                    if (!line) return;
+                    
+                    const parts = line.split(/\s+/);
+                    
+                    parts.forEach(part => {
+                        if (!part) return;
+                        
+                        if (part.includes('个') || part.includes('各')) {
+                            const lineResults = parseLine(part);
+                            
+                            Object.entries(lineResults).forEach(([num, val]) => {
+                                if (!results[num]) results[num] = 0;
+                                results[num] += val;
+                            });
+                        }
+                    });
+                });
+                
+                return results;
+            }
+
+            // 填充到输入框
+            function fillAmounts(results) {
+                let filledCount = 0;
+                let totalAmount = 0;
+                
+                amountInputs.forEach(input => {
+                    const num = input.dataset.number;
+                    if (results[num]) {
+                        const currentVal = parseFloat(input.value) || 0;
+                        const newVal = currentVal + results[num];
+                        input.value = newVal.toFixed(2);
+                        filledCount++;
+                        totalAmount += results[num];
+                    }
+                });
+                
+                calculateOrderTotal();
+                
+                return { filledCount, totalAmount };
+            }
+
+            // 打开识别弹窗
+            recognizeBtn.addEventListener('click', () => {
+                recognizeText.value = '';
+                parseResult.classList.remove('show');
+                recognizeModal.style.display = 'flex';
+            });
+
+            // 关闭识别弹窗
+            function closeRecognizeModal() {
+                recognizeModal.style.display = 'none';
+            }
+
+            closeRecognizeBtn.addEventListener('click', closeRecognizeModal);
+            cancelRecognizeBtn.addEventListener('click', closeRecognizeModal);
+
+            // 解析按钮点击
+            parseBtn.addEventListener('click', () => {
+                const text = recognizeText.value.trim();
+                if (!text) {
+                    alert('请输入要识别的文本');
+                    return;
+                }
+                
+                const results = parseText(text);
+                
+                if (Object.keys(results).length === 0) {
+                    alert('未能识别出任何有效数据，请检查格式');
+                    return;
+                }
+                
+                const { filledCount, totalAmount } = fillAmounts(results);
+                
+                parseResult.textContent = `✅ 识别成功！共填充 ${filledCount} 个号码，总金额 ¥${totalAmount.toFixed(2)}`;
+                parseResult.classList.add('show');
+            });
+        })();
     </script>
 </body>
 </html>
